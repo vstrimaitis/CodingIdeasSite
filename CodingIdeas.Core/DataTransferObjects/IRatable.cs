@@ -6,6 +6,6 @@ namespace CodingIdeas.Core
     {
         Guid Id { get; set; }
         DateTime PublishDate { get; set; }
-        User Author { get; set; }
+        Guid AuthorId { get; set; }
     }
 }

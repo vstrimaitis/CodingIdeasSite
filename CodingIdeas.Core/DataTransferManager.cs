@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,7 +19,6 @@ namespace CodingIdeas.Core
             PostsPerPage = postsPerPage;
             CommentsPerPage = commentsPerPage;
             SavedPostsPerPage = savedPostsPerPage;
-
         }
 
         public void AddComment(Comment comment)
@@ -60,9 +60,9 @@ namespace CodingIdeas.Core
             throw new NotImplementedException();
         }
 
-        public DataTable GetComments(Post post, int pageNumber)
+        public IEnumerable<Comment> GetComments(Post post, int pageNumber)
         {
-            var table = new DataTable();
+            /*var table = new DataTable();
             table.Columns.Add(nameof(IRatable.Id), typeof(Guid));
             table.Columns.Add(nameof(User.Username), typeof(string));
             table.Columns.Add(nameof(IRatable.PublishDate), typeof(DateTime));
@@ -94,7 +94,35 @@ namespace CodingIdeas.Core
                     table.Rows.Add(comment.Id, comment.AuthorUsername, comment.PublishDate, comment.Content, comment.Rating);
             }
             
-            return table;
+            return table;*/
+            using (var ctx = new DB.CodingIdeasEntities())
+            {
+                using (var conn = new SqlConnection(ctx.Database.Connection.ConnectionString))
+                {
+                    string selectSql = $@"SELECT C.[{Constants.Comment_Id}], C.[{Constants.Comment_Content}], R.[{Constants.RatableEntity_UserId}], R.[{Constants.RatableEntity_PublishDate}]
+                                          FROM [{Constants.Schema}].[{Constants.Comment}] as C
+                                          LEFT JOIN [{Constants.Schema}].[{Constants.RatableEntity}] AS R ON R.[{Constants.RatableEntity_Id}] = C.[{Constants.Comment_Id}] AND C.[{Constants.Comment_PostId}] = '{post.Id}'
+                                          ORDER BY R.[{Constants.RatableEntity_PublishDate}] DESC";
+                    using (var adapter = new SqlDataAdapter(selectSql, conn))
+                    {
+                        var table = new DataTable();
+                        adapter.Fill(table);
+                        foreach(DataRow row in table.Rows)
+                        {
+                            var comment = new Comment()
+                            {
+                                Id = Guid.Parse(row[0].ToString()),
+                                PostId = post.Id,
+                                Content = row[1].ToString(),
+                                AuthorId = Guid.Parse(row[2].ToString()),
+                                PublishDate = DateTime.Parse(row[3].ToString())
+                            };
+                            yield return comment;
+                        }
+                    }
+                }
+            }
+            
         }
 
         public DataTable GetPosts(int pageNumber)
@@ -130,7 +158,13 @@ namespace CodingIdeas.Core
 
         public int GetTotalRating(IRatable entity)
         {
-            throw new NotImplementedException();
+
+            using (var ctx = new DB.CodingIdeasEntities())
+            {
+                return (from r in ctx.RatedEntities1
+                        where r.EntityId == entity.Id
+                        select (int)r.Rating).AsEnumerable().Aggregate((x, y) => x + y);
+            }
         }
 
         public User GetUser(string login, string passwordHash)

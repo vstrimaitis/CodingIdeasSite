@@ -52,6 +52,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Constants.cs" />
     <Compile Include="DataTransferManager.cs" />
     <Compile Include="DataTransferObjects\Comment.cs" />
     <Compile Include="DataTransferObjects\IRatable.cs" />

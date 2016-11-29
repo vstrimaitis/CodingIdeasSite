@@ -1,11 +1,12 @@
-﻿using System.Data;
+﻿using System.Collections.Generic;
+using System.Data;
 
 namespace CodingIdeas.Core
 {
     public interface IDataTransferManager
     {
         DataTable GetPosts(int pageNumber);
-        DataTable GetComments(Post post, int pageNumber);
+        IEnumerable<Comment> GetComments(Post post, int pageNumber);
         int GetTotalRating(IRatable entity);
         User GetUser(string login, string passwordHash); // GetUserInfo? login = username or email
         DataTable GetSavedPosts(User user, int pageNumber);

@@ -4,18 +4,18 @@ namespace CodingIdeas.Core
 {
     public struct Comment : IRatable
     {
-        public User Author { get; set; }
+        public Guid AuthorId { get; set; }
         public Guid Id { get; set; }
         public DateTime PublishDate { get; set; }
-        public Post Post { get; set; }
+        public Guid PostId { get; set; }
         public string Content { get; set; }
 
-        public Comment(User author, DateTime publishDate, Post post, string content)
+        public Comment(Guid authorId, DateTime publishDate, Guid postId, string content)
         {
             Id = Guid.NewGuid();
-            Author = author;
+            AuthorId = authorId;
             PublishDate = publishDate;
-            Post = post;
+            PostId = postId;
             Content = content;
         }
     }
