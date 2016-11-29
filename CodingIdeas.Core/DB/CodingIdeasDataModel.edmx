@@ -1,0 +1,603 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="CodingIdeas.Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Comment">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Post_Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Content" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Post">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Content" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Programming_Language">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="15" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Ratable_Entity">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="User_Id" Type="uniqueidentifier" />
+          <Property Name="Publish_Date" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Rated_Entities">
+          <Key>
+            <PropertyRef Name="Entity_Id" />
+            <PropertyRef Name="User_Id" />
+          </Key>
+          <Property Name="Entity_Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="User_Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Rating" Type="smallint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Saved_Posts">
+          <Key>
+            <PropertyRef Name="Post_Id" />
+            <PropertyRef Name="User_Id" />
+          </Key>
+          <Property Name="Post_Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="User_Id" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="254" Nullable="false" />
+          <Property Name="Username" Type="nvarchar" MaxLength="100" />
+          <Property Name="First_Name" Type="nvarchar" MaxLength="30" />
+          <Property Name="Last_Name" Type="nvarchar" MaxLength="30" />
+          <Property Name="Password" Type="char" MaxLength="64" Nullable="false" />
+          <Property Name="DOB" Type="date" />
+        </EntityType>
+        <EntityType Name="User_Skills">
+          <Key>
+            <PropertyRef Name="User_Id" />
+            <PropertyRef Name="Programming_Language_Id" />
+          </Key>
+          <Property Name="User_Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Programming_Language_Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Proficiency" Type="smallint" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Comment_Post">
+          <End Role="Post" Type="Self.Post" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Comment" Type="Self.Comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Post">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Comment">
+              <PropertyRef Name="Post_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Comment_Ratable_Entity">
+          <End Role="Ratable_Entity" Type="Self.Ratable_Entity" Multiplicity="1" />
+          <End Role="Comment" Type="Self.Comment" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Ratable_Entity">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Comment">
+              <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Post_Ratable_Entity">
+          <End Role="Ratable_Entity" Type="Self.Ratable_Entity" Multiplicity="1" />
+          <End Role="Post" Type="Self.Post" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Ratable_Entity">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Post">
+              <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Ratable_Entity_User">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Ratable_Entity" Type="Self.Ratable_Entity" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Ratable_Entity">
+              <PropertyRef Name="User_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Rated_Entities_Ratable_Entity">
+          <End Role="Ratable_Entity" Type="Self.Ratable_Entity" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Rated_Entities" Type="Self.Rated_Entities" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ratable_Entity">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Rated_Entities">
+              <PropertyRef Name="Entity_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Rated_Entities_User">
+          <End Role="User" Type="Self.User" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Rated_Entities" Type="Self.Rated_Entities" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Rated_Entities">
+              <PropertyRef Name="User_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Saved_Posts_Post">
+          <End Role="Post" Type="Self.Post" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Saved_Posts" Type="Self.Saved_Posts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Post">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Saved_Posts">
+              <PropertyRef Name="Post_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Saved_Posts_User">
+          <End Role="User" Type="Self.User" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Saved_Posts" Type="Self.Saved_Posts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Saved_Posts">
+              <PropertyRef Name="User_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_Skills_Programming_Language">
+          <End Role="Programming_Language" Type="Self.Programming_Language" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="User_Skills" Type="Self.User_Skills" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Programming_Language">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="User_Skills">
+              <PropertyRef Name="Programming_Language_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_Skills_User">
+          <End Role="User" Type="Self.User" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="User_Skills" Type="Self.User_Skills" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="User_Skills">
+              <PropertyRef Name="User_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="CodingIdeasModelStoreContainer">
+          <EntitySet Name="Comment" EntityType="Self.Comment" Schema="coding_ideas" store:Type="Tables" />
+          <EntitySet Name="Post" EntityType="Self.Post" Schema="coding_ideas" store:Type="Tables" />
+          <EntitySet Name="Programming_Language" EntityType="Self.Programming_Language" Schema="coding_ideas" store:Type="Tables" />
+          <EntitySet Name="Ratable_Entity" EntityType="Self.Ratable_Entity" Schema="coding_ideas" store:Type="Tables" />
+          <EntitySet Name="Rated_Entities" EntityType="Self.Rated_Entities" Schema="coding_ideas" store:Type="Tables" />
+          <EntitySet Name="Saved_Posts" EntityType="Self.Saved_Posts" Schema="coding_ideas" store:Type="Tables" />
+          <EntitySet Name="User" EntityType="Self.User" Schema="coding_ideas" store:Type="Tables" />
+          <EntitySet Name="User_Skills" EntityType="Self.User_Skills" Schema="coding_ideas" store:Type="Tables" />
+          <AssociationSet Name="FK_Comment_Post" Association="Self.FK_Comment_Post">
+            <End Role="Post" EntitySet="Post" />
+            <End Role="Comment" EntitySet="Comment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Comment_Ratable_Entity" Association="Self.FK_Comment_Ratable_Entity">
+            <End Role="Ratable_Entity" EntitySet="Ratable_Entity" />
+            <End Role="Comment" EntitySet="Comment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Post_Ratable_Entity" Association="Self.FK_Post_Ratable_Entity">
+            <End Role="Ratable_Entity" EntitySet="Ratable_Entity" />
+            <End Role="Post" EntitySet="Post" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Ratable_Entity_User" Association="Self.FK_Ratable_Entity_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Ratable_Entity" EntitySet="Ratable_Entity" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Rated_Entities_Ratable_Entity" Association="Self.FK_Rated_Entities_Ratable_Entity">
+            <End Role="Ratable_Entity" EntitySet="Ratable_Entity" />
+            <End Role="Rated_Entities" EntitySet="Rated_Entities" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Rated_Entities_User" Association="Self.FK_Rated_Entities_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Rated_Entities" EntitySet="Rated_Entities" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Saved_Posts_Post" Association="Self.FK_Saved_Posts_Post">
+            <End Role="Post" EntitySet="Post" />
+            <End Role="Saved_Posts" EntitySet="Saved_Posts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Saved_Posts_User" Association="Self.FK_Saved_Posts_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Saved_Posts" EntitySet="Saved_Posts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_Skills_Programming_Language" Association="Self.FK_User_Skills_Programming_Language">
+            <End Role="Programming_Language" EntitySet="Programming_Language" />
+            <End Role="User_Skills" EntitySet="User_Skills" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_Skills_User" Association="Self.FK_User_Skills_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="User_Skills" EntitySet="User_Skills" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="CodingIdeas.Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Comment">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="PostId" Type="Guid" Nullable="false" />
+          <Property Name="Content" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Post" Relationship="Self.FK_Comment_Post" FromRole="Comment" ToRole="Post" />
+          <NavigationProperty Name="RatableEntity" Relationship="Self.FK_Comment_Ratable_Entity" FromRole="Comment" ToRole="Ratable_Entity" />
+        </EntityType>
+        <EntityType Name="Post">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="Title" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Content" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Comments" Relationship="Self.FK_Comment_Post" FromRole="Post" ToRole="Comment" />
+          <NavigationProperty Name="RatableEntity" Relationship="Self.FK_Post_Ratable_Entity" FromRole="Post" ToRole="Ratable_Entity" />
+          <NavigationProperty Name="Users" Relationship="Self.Saved_Posts" FromRole="Post" ToRole="User" />
+        </EntityType>
+        <EntityType Name="ProgrammingLanguage">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="UserSkills" Relationship="Self.FK_User_Skills_Programming_Language" FromRole="Programming_Language" ToRole="User_Skills" />
+        </EntityType>
+        <EntityType Name="RatableEntity">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="UserId" Type="Guid" />
+          <Property Name="PublishDate" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Comment" Relationship="Self.FK_Comment_Ratable_Entity" FromRole="Ratable_Entity" ToRole="Comment" />
+          <NavigationProperty Name="Post" Relationship="Self.FK_Post_Ratable_Entity" FromRole="Ratable_Entity" ToRole="Post" />
+          <NavigationProperty Name="User" Relationship="Self.FK_Ratable_Entity_User" FromRole="Ratable_Entity" ToRole="User" />
+          <NavigationProperty Name="RatedEntities" Relationship="Self.FK_Rated_Entities_Ratable_Entity" FromRole="Ratable_Entity" ToRole="Rated_Entities" />
+        </EntityType>
+        <EntityType Name="RatedEntity">
+          <Key>
+            <PropertyRef Name="EntityId" />
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="EntityId" Type="Guid" Nullable="false" />
+          <Property Name="UserId" Type="Guid" Nullable="false" />
+          <Property Name="Rating" Type="Int16" Nullable="false" />
+          <NavigationProperty Name="RatableEntity" Relationship="Self.FK_Rated_Entities_Ratable_Entity" FromRole="Rated_Entities" ToRole="Ratable_Entity" />
+          <NavigationProperty Name="User" Relationship="Self.FK_Rated_Entities_User" FromRole="Rated_Entities" ToRole="User" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="254" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Username" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="FirstName" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" MaxLength="64" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="DOB" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="RatableEntity" Relationship="Self.FK_Ratable_Entity_User" FromRole="User" ToRole="Ratable_Entity" />
+          <NavigationProperty Name="RatedEntities" Relationship="Self.FK_Rated_Entities_User" FromRole="User" ToRole="Rated_Entities" />
+          <NavigationProperty Name="UserSkills" Relationship="Self.FK_User_Skills_User" FromRole="User" ToRole="User_Skills" />
+          <NavigationProperty Name="Posts" Relationship="Self.Saved_Posts" FromRole="User" ToRole="Post" />
+        </EntityType>
+        <EntityType Name="UserSkill">
+          <Key>
+            <PropertyRef Name="UserId" />
+            <PropertyRef Name="ProgrammingLanguageId" />
+          </Key>
+          <Property Name="UserId" Type="Guid" Nullable="false" />
+          <Property Name="ProgrammingLanguageId" Type="Guid" Nullable="false" />
+          <Property Name="Proficiency" Type="Int16" Nullable="false" />
+          <NavigationProperty Name="ProgrammingLanguage" Relationship="Self.FK_User_Skills_Programming_Language" FromRole="User_Skills" ToRole="Programming_Language" />
+          <NavigationProperty Name="User" Relationship="Self.FK_User_Skills_User" FromRole="User_Skills" ToRole="User" />
+        </EntityType>
+        <Association Name="FK_Comment_Post">
+          <End Role="Post" Type="Self.Post" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Comment" Type="Self.Comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Post">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Comment">
+              <PropertyRef Name="PostId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Comment_Ratable_Entity">
+          <End Role="Ratable_Entity" Type="CodingIdeas.Model.RatableEntity" Multiplicity="1" />
+          <End Role="Comment" Type="Self.Comment" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Ratable_Entity">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Comment">
+              <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Post_Ratable_Entity">
+          <End Role="Ratable_Entity" Type="CodingIdeas.Model.RatableEntity" Multiplicity="1" />
+          <End Role="Post" Type="Self.Post" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Ratable_Entity">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Post">
+              <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_Skills_Programming_Language">
+          <End Role="Programming_Language" Type="CodingIdeas.Model.ProgrammingLanguage" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="User_Skills" Type="CodingIdeas.Model.UserSkill" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Programming_Language">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="User_Skills">
+              <PropertyRef Name="ProgrammingLanguageId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Ratable_Entity_User">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Ratable_Entity" Type="CodingIdeas.Model.RatableEntity" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Ratable_Entity">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Rated_Entities_Ratable_Entity">
+          <End Role="Ratable_Entity" Type="CodingIdeas.Model.RatableEntity" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Rated_Entities" Type="CodingIdeas.Model.RatedEntity" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ratable_Entity">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Rated_Entities">
+              <PropertyRef Name="EntityId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Rated_Entities_User">
+          <End Role="User" Type="Self.User" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Rated_Entities" Type="CodingIdeas.Model.RatedEntity" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Rated_Entities">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_Skills_User">
+          <End Role="User" Type="Self.User" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="User_Skills" Type="CodingIdeas.Model.UserSkill" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="User_Skills">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Saved_Posts">
+          <End Role="Post" Type="Self.Post" Multiplicity="*" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="CodingIdeasEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Comments" EntityType="Self.Comment" />
+          <EntitySet Name="Posts" EntityType="Self.Post" />
+          <EntitySet Name="ProgrammingLanguages" EntityType="CodingIdeas.Model.ProgrammingLanguage" />
+          <EntitySet Name="RatableEntities" EntityType="CodingIdeas.Model.RatableEntity" />
+          <EntitySet Name="RatedEntities1" EntityType="CodingIdeas.Model.RatedEntity" />
+          <EntitySet Name="Users" EntityType="Self.User" />
+          <EntitySet Name="UserSkills" EntityType="CodingIdeas.Model.UserSkill" />
+          <AssociationSet Name="FK_Comment_Post" Association="Self.FK_Comment_Post">
+            <End Role="Post" EntitySet="Posts" />
+            <End Role="Comment" EntitySet="Comments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Comment_Ratable_Entity" Association="Self.FK_Comment_Ratable_Entity">
+            <End Role="Ratable_Entity" EntitySet="RatableEntities" />
+            <End Role="Comment" EntitySet="Comments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Post_Ratable_Entity" Association="Self.FK_Post_Ratable_Entity">
+            <End Role="Ratable_Entity" EntitySet="RatableEntities" />
+            <End Role="Post" EntitySet="Posts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_Skills_Programming_Language" Association="Self.FK_User_Skills_Programming_Language">
+            <End Role="Programming_Language" EntitySet="ProgrammingLanguages" />
+            <End Role="User_Skills" EntitySet="UserSkills" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Ratable_Entity_User" Association="Self.FK_Ratable_Entity_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Ratable_Entity" EntitySet="RatableEntities" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Rated_Entities_Ratable_Entity" Association="Self.FK_Rated_Entities_Ratable_Entity">
+            <End Role="Ratable_Entity" EntitySet="RatableEntities" />
+            <End Role="Rated_Entities" EntitySet="RatedEntities1" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Rated_Entities_User" Association="Self.FK_Rated_Entities_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Rated_Entities" EntitySet="RatedEntities1" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_Skills_User" Association="Self.FK_User_Skills_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="User_Skills" EntitySet="UserSkills" />
+          </AssociationSet>
+          <AssociationSet Name="Saved_Posts" Association="Self.Saved_Posts">
+            <End Role="Post" EntitySet="Posts" />
+            <End Role="User" EntitySet="Users" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="CodingIdeasModelStoreContainer" CdmEntityContainer="CodingIdeasEntities">
+          <EntitySetMapping Name="Comments">
+            <EntityTypeMapping TypeName="CodingIdeas.Model.Comment">
+              <MappingFragment StoreEntitySet="Comment">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="PostId" ColumnName="Post_Id" />
+                <ScalarProperty Name="Content" ColumnName="Content" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Posts">
+            <EntityTypeMapping TypeName="CodingIdeas.Model.Post">
+              <MappingFragment StoreEntitySet="Post">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Content" ColumnName="Content" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProgrammingLanguages">
+            <EntityTypeMapping TypeName="CodingIdeas.Model.ProgrammingLanguage">
+              <MappingFragment StoreEntitySet="Programming_Language">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RatableEntities">
+            <EntityTypeMapping TypeName="CodingIdeas.Model.RatableEntity">
+              <MappingFragment StoreEntitySet="Ratable_Entity">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="UserId" ColumnName="User_Id" />
+                <ScalarProperty Name="PublishDate" ColumnName="Publish_Date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RatedEntities1">
+            <EntityTypeMapping TypeName="CodingIdeas.Model.RatedEntity">
+              <MappingFragment StoreEntitySet="Rated_Entities">
+                <ScalarProperty Name="EntityId" ColumnName="Entity_Id" />
+                <ScalarProperty Name="UserId" ColumnName="User_Id" />
+                <ScalarProperty Name="Rating" ColumnName="Rating" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="CodingIdeas.Model.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="FirstName" ColumnName="First_Name" />
+                <ScalarProperty Name="LastName" ColumnName="Last_Name" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="DOB" ColumnName="DOB" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserSkills">
+            <EntityTypeMapping TypeName="CodingIdeas.Model.UserSkill">
+              <MappingFragment StoreEntitySet="User_Skills">
+                <ScalarProperty Name="UserId" ColumnName="User_Id" />
+                <ScalarProperty Name="ProgrammingLanguageId" ColumnName="Programming_Language_Id" />
+                <ScalarProperty Name="Proficiency" ColumnName="Proficiency" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="Saved_Posts" TypeName="CodingIdeas.Model.Saved_Posts" StoreEntitySet="Saved_Posts">
+            <EndProperty Name="Post">
+              <ScalarProperty Name="Id" ColumnName="Post_Id" />
+            </EndProperty>
+            <EndProperty Name="User">
+              <ScalarProperty Name="Id" ColumnName="User_Id" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
