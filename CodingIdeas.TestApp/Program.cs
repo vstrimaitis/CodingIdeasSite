@@ -40,7 +40,7 @@ namespace CodingIdeas.TestApp
             string userJson = JsonConvert.SerializeObject(mgr.GetUser("vstrimaitis@gmail.com", "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8"), Formatting.Indented);
             Console.WriteLine(userJson);
 
-            string savedPosts = JsonConvert.SerializeObject(mgr.GetSavedPosts(new User() { Id = Guid.Parse("2BE73EAF-66D2-4685-A075-CD473D918817") }, 1), Formatting.Indented);
+            string savedPosts = JsonConvert.SerializeObject(mgr.GetSavedPosts(new User() { Id = Guid.Parse("A5E98261-A753-4249-B092-AF7ADA603B36") }, 1), Formatting.Indented);
             Console.WriteLine(savedPosts);
             
 

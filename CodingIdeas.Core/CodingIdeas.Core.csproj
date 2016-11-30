@@ -54,6 +54,18 @@
   <ItemGroup>
     <Compile Include="Constants.cs" />
     <Compile Include="DataTransferManager.cs" />
+    <Compile Include="DataTransferManager.Add.cs">
+		<DependentUpon>DataTransferManager.cs</DependentUpon>
+	</Compile>
+    <Compile Include="DataTransferManager.Get.cs">
+		<DependentUpon>DataTransferManager.cs</DependentUpon>
+	</Compile>
+    <Compile Include="DataTransferManager.Remove.cs">
+		<DependentUpon>DataTransferManager.cs</DependentUpon>
+	</Compile>
+    <Compile Include="DataTransferManager.Update.cs">
+		<DependentUpon>DataTransferManager.cs</DependentUpon>
+	</Compile>
     <Compile Include="DataTransferObjects\Comment.cs" />
     <Compile Include="DataTransferObjects\IRatable.cs" />
     <Compile Include="DataTransferObjects\Post.cs" />
