@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CodingIdeas.Core.Exceptions;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
@@ -185,7 +186,28 @@ namespace CodingIdeas.Core
 
         public User GetUser(string login, string passwordHash)
         {
-            throw new NotImplementedException();
+            using (var ctx = new DB.CodingIdeasEntities())
+            {
+                var user = ctx.Users.Where(x => (x.Email == login || x.Username == login) && x.Password == passwordHash).FirstOrDefault();
+                if(user == null)
+                    throw new UserNotFoundException();
+                var skills = ctx.UserSkills.ToList().Select(x => new UserSkill()
+                {
+                    ProgrammingLanguage = new ProgrammingLanguage() { Id = x.ProgrammingLanguage.Id, Name = x.ProgrammingLanguage.Name},
+                    Proficiency = (byte)x.Proficiency
+                }).ToList();
+                return new User()
+                {
+                    Id = user.Id,
+                    DateOfBirth = user.DOB,
+                    Email = user.Email,
+                    FirstName = user.FirstName,
+                    LastName = user.LastName,
+                    PasswordHash = user.Password,
+                    Skills = skills,
+                    Username = user.Username
+                };
+            }
         }
 
         public void RemoveComment(Comment comment)

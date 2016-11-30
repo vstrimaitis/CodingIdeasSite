@@ -36,7 +36,11 @@ namespace CodingIdeas.TestApp
             //mgr.RemovePost(new Post() { Id = Guid.Parse("0C6D26C3-3C72-42AF-86F4-C3C75F5E339F") });
             string allPostsJson = JsonConvert.SerializeObject(mgr.GetPosts(1).ToList(), Formatting.Indented);
             Console.WriteLine(allPostsJson);
+
+            string userJson = JsonConvert.SerializeObject(mgr.GetUser("vstrimaitis@gmail.com", "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8"), Formatting.Indented);
+            Console.WriteLine(userJson);
             
+
             /*string json = JsonConvert.SerializeObject(langTable, Formatting.Indented);
             Console.WriteLine(json);
 

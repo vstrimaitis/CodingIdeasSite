@@ -12,9 +12,9 @@ namespace CodingIdeas.Core
         public string LastName { get; set; }
         public DateTime? DateOfBirth { get; set; }
         public string PasswordHash { get; set; }
-        public IDictionary<ProgrammingLanguage, byte> Skills { get; private set; }
+        public IList<UserSkill> Skills { get; set; }
 
-        public User(string email, string username, string firstName, string lastName, DateTime? dob, string passwordHash, IDictionary<ProgrammingLanguage, byte> skills)
+        public User(string email, string username, string firstName, string lastName, DateTime? dob, string passwordHash, IList<UserSkill> skills)
         {
             Id = Guid.NewGuid();
             Email = email;
