@@ -4,8 +4,6 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CodingIdeas.Core
 {
@@ -165,12 +163,37 @@ namespace CodingIdeas.Core
 
         public sbyte GetRatingByUser(User user, IRatable entity)
         {
-            throw new NotImplementedException();
+            using (var ctx = new DB.CodingIdeasEntities())
+            {
+                return ctx.RatedEntities1
+                          .Where(x => x.UserId == user.Id && x.EntityId == entity.Id)
+                          .Select(x => (sbyte)x.Rating)
+                          .FirstOrDefault();
+            }
         }
 
         public IEnumerable<Post> GetSavedPosts(User user, int pageNumber)
         {
-            throw new NotImplementedException();
+            using (var ctx = new DB.CodingIdeasEntities())
+            {
+                var saved = ctx.Users
+                            .Where(x => x.Id == user.Id)
+                            .FirstOrDefault()
+                            .SavedPosts
+                            .Skip((pageNumber - 1) * SavedPostsPerPage)
+                            .Take(SavedPostsPerPage)
+                            .AsEnumerable()
+                            .Select(x => new Post()
+                            {
+                                Id = x.Id,
+                                AuthorId = x.RatableEntity.UserId,
+                                Content = x.Content,
+                                PublishDate = x.RatableEntity.PublishDate,
+                                Title = x.Title
+                            });
+                foreach (var s in saved)
+                    yield return s;
+            }
         }
 
         public int GetTotalRating(IRatable entity)

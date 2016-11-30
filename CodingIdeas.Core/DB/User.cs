@@ -20,7 +20,7 @@ namespace CodingIdeas.Core.DB
             this.RatableEntity = new HashSet<RatableEntity>();
             this.RatedEntities = new HashSet<RatedEntity>();
             this.UserSkills = new HashSet<UserSkill>();
-            this.Posts = new HashSet<Post>();
+            this.SavedPosts = new HashSet<Post>();
         }
     
         public System.Guid Id { get; set; }
@@ -38,6 +38,6 @@ namespace CodingIdeas.Core.DB
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UserSkill> UserSkills { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Post> Posts { get; set; }
+        public virtual ICollection<Post> SavedPosts { get; set; }
     }
 }

@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="CodingIdeas.Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="CodingIdeas.Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Comment">
           <Key>
             <PropertyRef Name="Id" />
@@ -258,8 +258,7 @@
             <End Role="User_Skills" EntitySet="User_Skills" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="CodingIdeas.Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -329,7 +328,7 @@
           <NavigationProperty Name="RatableEntity" Relationship="Self.FK_Ratable_Entity_User" FromRole="User" ToRole="Ratable_Entity" />
           <NavigationProperty Name="RatedEntities" Relationship="Self.FK_Rated_Entities_User" FromRole="User" ToRole="Rated_Entities" />
           <NavigationProperty Name="UserSkills" Relationship="Self.FK_User_Skills_User" FromRole="User" ToRole="User_Skills" />
-          <NavigationProperty Name="Posts" Relationship="Self.Saved_Posts" FromRole="User" ToRole="Post" />
+          <NavigationProperty Name="SavedPosts" Relationship="Self.Saved_Posts" FromRole="User" ToRole="Post" />
         </EntityType>
         <EntityType Name="UserSkill">
           <Key>
