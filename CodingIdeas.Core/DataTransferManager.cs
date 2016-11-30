@@ -62,39 +62,6 @@ namespace CodingIdeas.Core
 
         public IEnumerable<Comment> GetComments(Post post, int pageNumber)
         {
-            /*var table = new DataTable();
-            table.Columns.Add(nameof(IRatable.Id), typeof(Guid));
-            table.Columns.Add(nameof(User.Username), typeof(string));
-            table.Columns.Add(nameof(IRatable.PublishDate), typeof(DateTime));
-            table.Columns.Add(nameof(DB.Comment.Content), typeof(string));
-            table.Columns.Add("Rating", typeof(short));
-
-            using (var ctx = new DB.CodingIdeasEntities())
-            {
-                var comments = (from c in ctx.Comments
-                                where c.PostId == post.Id
-                                join r in ctx.RatableEntities on c.Id equals r.Id
-                                orderby r.PublishDate
-                                select new
-                                {
-                                    Id = c.Id,
-                                    AuthorUsername = (from u in ctx.Users
-                                                      where u.Id == r.UserId
-                                                      select u.Username).FirstOrDefault(),
-                                    PublishDate = r.PublishDate,
-                                    Content = c.Content,
-                                    Rating = (from p in ctx.RatedEntities1
-                                              where p.EntityId == r.Id
-                                              select p.Rating)
-                                              .Aggregate((x, y) => (short)(x + y)) // causes errors
-                               })
-                               .Skip((pageNumber-1) * CommentsPerPage)
-                               .Take(CommentsPerPage);
-                foreach(var comment in comments)
-                    table.Rows.Add(comment.Id, comment.AuthorUsername, comment.PublishDate, comment.Content, comment.Rating);
-            }
-            
-            return table;*/
             using (var ctx = new DB.CodingIdeasEntities())
             {
                 using (var conn = new SqlConnection(ctx.Database.Connection.ConnectionString))
@@ -125,12 +92,24 @@ namespace CodingIdeas.Core
             
         }
 
-        public DataTable GetPosts(int pageNumber)
+        public IEnumerable<Post> GetPosts(int pageNumber)
         {
-            throw new NotImplementedException();
+            using (var ctx = new DB.CodingIdeasEntities())
+            {
+                var posts = (from p in ctx.Posts
+                             join r in ctx.RatableEntities on p.Id equals r.Id
+                             orderby r.PublishDate
+                             select new { AuthorId = r.UserId, Id = p.Id, Content = p.Content, PublishDate = r.PublishDate, Title =  p.Title })
+                             .Skip((pageNumber - 1) * PostsPerPage)
+                             .Take(PostsPerPage)
+                             .ToList()
+                             .Select(x => new Post() { AuthorId = x.AuthorId, Id = x.Id, Content = x.Content, PublishDate = x.PublishDate, Title = x.Title });
+                foreach (var post in posts)
+                    yield return post;
+            }
         }
 
-        public DataTable GetProgrammingLanguages()
+        public IEnumerable<ProgrammingLanguage> GetProgrammingLanguages()
         {
             var table = new DataTable();
             table.Columns.Add(nameof(ProgrammingLanguage.Id), typeof(Guid));
@@ -140,10 +119,9 @@ namespace CodingIdeas.Core
             {
                 foreach(var lang in ctx.ProgrammingLanguages)
                 {
-                    table.Rows.Add(lang.Id, lang.Name);
+                    yield return new ProgrammingLanguage() { Id = lang.Id, Name = lang.Name };
                 }
             }
-            return table;
         }
 
         public sbyte GetRatingByUser(User user, IRatable entity)
@@ -151,7 +129,7 @@ namespace CodingIdeas.Core
             throw new NotImplementedException();
         }
 
-        public DataTable GetSavedPosts(User user, int pageNumber)
+        public IEnumerable<Post> GetSavedPosts(User user, int pageNumber)
         {
             throw new NotImplementedException();
         }

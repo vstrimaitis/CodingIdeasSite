@@ -4,7 +4,7 @@ namespace CodingIdeas.Core
 {
     public struct Comment : IRatable
     {
-        public Guid AuthorId { get; set; }
+        public Guid? AuthorId { get; set; }
         public Guid Id { get; set; }
         public DateTime PublishDate { get; set; }
         public Guid PostId { get; set; }

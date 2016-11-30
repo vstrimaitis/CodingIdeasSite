@@ -5,13 +5,13 @@ namespace CodingIdeas.Core
 {
     public interface IDataTransferManager
     {
-        DataTable GetPosts(int pageNumber);
+        IEnumerable<Post> GetPosts(int pageNumber);
         IEnumerable<Comment> GetComments(Post post, int pageNumber);
         int GetTotalRating(IRatable entity);
         User GetUser(string login, string passwordHash); // GetUserInfo? login = username or email
-        DataTable GetSavedPosts(User user, int pageNumber);
+        IEnumerable<Post> GetSavedPosts(User user, int pageNumber);
         sbyte GetRatingByUser(User user, IRatable entity);
-        DataTable GetProgrammingLanguages();
+        IEnumerable<ProgrammingLanguage> GetProgrammingLanguages();
 
         void AddRating(User user, IRatable entity, sbyte rating);
         void Save(User user, Post postToSave);
