@@ -23,12 +23,50 @@ namespace CodingIdeas.Core
 
         public void AddComment(Comment comment)
         {
-            throw new NotImplementedException();
+            var commentModel = new DB.Comment()
+            {
+                Id = comment.Id,
+                Content = comment.Content,
+                PostId = comment.PostId
+            };
+
+            var ratableEntityModel = new DB.RatableEntity()
+            {
+                Id = comment.Id,
+                PublishDate = comment.PublishDate,
+                UserId = comment.AuthorId
+            };
+
+            using (var ctx = new DB.CodingIdeasEntities())
+            {
+                ctx.RatableEntities.Add(ratableEntityModel);
+                ctx.Comments.Add(commentModel);
+                ctx.SaveChanges();
+            }
         }
 
         public void AddPost(Post post)
         {
-            throw new NotImplementedException();
+            var postModel = new DB.Post()
+            {
+                Id = post.Id,
+                Content = post.Content,
+                Title = post.Title
+            };
+
+            var ratableEntityModel = new DB.RatableEntity()
+            {
+                Id = post.Id,
+                UserId = post.AuthorId,
+                PublishDate = post.PublishDate
+            };
+
+            using (var ctx = new DB.CodingIdeasEntities())
+            {
+                ctx.RatableEntities.Add(ratableEntityModel);
+                ctx.Posts.Add(postModel);
+                ctx.SaveChanges();
+            }
         }
 
         public void AddProgrammingLanguage(ProgrammingLanguage language)
@@ -152,12 +190,22 @@ namespace CodingIdeas.Core
 
         public void RemoveComment(Comment comment)
         {
-            throw new NotImplementedException();
+            using (var ctx = new DB.CodingIdeasEntities())
+            {
+                ctx.Comments.Remove(ctx.Comments.Where(x => x.Id == comment.Id).FirstOrDefault());
+                ctx.RatableEntities.Remove(ctx.RatableEntities.Where(x => x.Id == comment.Id).FirstOrDefault());
+                ctx.SaveChanges();
+            }
         }
 
         public void RemovePost(Post post)
         {
-            throw new NotImplementedException();
+            using (var ctx = new DB.CodingIdeasEntities())
+            {
+                ctx.Posts.Remove(ctx.Posts.Where(x => x.Id == post.Id).FirstOrDefault());
+                ctx.RatableEntities.Remove(ctx.RatableEntities.Where(x => x.Id == post.Id).FirstOrDefault());
+                ctx.SaveChanges();
+            }
         }
 
         public void RemoveProgrammingLanguage(ProgrammingLanguage language)

@@ -27,18 +27,16 @@ namespace CodingIdeas.TestApp
             string allLangsJson = JsonConvert.SerializeObject(mgr.GetProgrammingLanguages().ToList(), Formatting.Indented);
             Console.WriteLine(allLangsJson);
 
-            foreach(var comment in mgr.GetComments(new Post() { Id = Guid.Parse("04F64928-39EB-4798-8295-2ABD23BD92DF") }, 1))
-            {
-                //Console.WriteLine("{0}\t{1}\t{2}\t{3}\t{4}\t{5}", comment.Id, comment.AuthorId, comment.Content, comment.PostId, comment.PublishDate, mgr.GetTotalRating(comment));
-                string json = JsonConvert.SerializeObject(comment, Formatting.Indented);
-                Console.WriteLine(json);
-            }
+            //mgr.AddComment(new Comment(Guid.Parse("A5E98261-A753-4249-B092-AF7ADA603B36"), DateTime.Now, Guid.Parse("04F64928-39EB-4798-8295-2ABD23BD92DF"), "sample comment"));
+            //mgr.RemoveComment(new Comment() { Id = Guid.Parse("A5DB3883-CD62-4421-AB4F-5F89BC6B061A") });
+            string allCommentsJson = JsonConvert.SerializeObject(mgr.GetComments(new Post() { Id = Guid.Parse("04F64928-39EB-4798-8295-2ABD23BD92DF") }, 1).ToList(), Formatting.Indented);
+            Console.WriteLine(allCommentsJson);
 
-            foreach(var post in mgr.GetPosts(1))
-            {
-                string json = JsonConvert.SerializeObject(post, Formatting.Indented);
-                Console.WriteLine(json);
-            }
+            //mgr.AddPost(new Post(Guid.Parse("A5E98261-A753-4249-B092-AF7ADA603B36"), DateTime.Now.AddDays(-2), "Sample title", "Sample content content content"));
+            //mgr.RemovePost(new Post() { Id = Guid.Parse("0C6D26C3-3C72-42AF-86F4-C3C75F5E339F") });
+            string allPostsJson = JsonConvert.SerializeObject(mgr.GetPosts(1).ToList(), Formatting.Indented);
+            Console.WriteLine(allPostsJson);
+            
             /*string json = JsonConvert.SerializeObject(langTable, Formatting.Indented);
             Console.WriteLine(json);
 
