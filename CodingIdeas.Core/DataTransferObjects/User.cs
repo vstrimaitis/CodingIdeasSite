@@ -3,6 +3,19 @@ using System.Collections.Generic;
 
 namespace CodingIdeas.Core
 {
+    [Flags]
+    public enum UserProperties
+    {
+        None = 0,
+        Email = 1,
+        Username = 2,
+        FirstName = 4,
+        LastName = 8,
+        DateOfBirth = 16,
+        PasswordHash = 32,
+        All = 64
+    }
+
     public struct User
     {
         public Guid Id { get; set; }

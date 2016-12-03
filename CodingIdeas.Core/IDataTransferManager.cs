@@ -23,9 +23,10 @@ namespace CodingIdeas.Core
 
         void UpdatePost(Post old, Post @new);
         void UpdateComment(Comment old, Comment @new);
-        void UpdateUser(User old, User @new);
+        void UpdateUser(User old, User @new, UserProperties propertiesToChange);
         void UpdateRating(User user, IRatable entity, sbyte newRating);
         void UpdateProgrammingLanguage(ProgrammingLanguage old, ProgrammingLanguage @new);
+        void UpdateSkill(User user, ProgrammingLanguage language, byte proficiency);
 
         void RemovePost(Post post);
         void RemoveComment(Comment comment);

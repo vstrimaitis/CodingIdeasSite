@@ -55,7 +55,16 @@ namespace CodingIdeas.TestApp
                 new ProgrammingLanguage(){ Id = Guid.Parse("C086B3DA-DF58-490C-BE2F-C981A334D466"), Name = "Python"},
                 new ProgrammingLanguage(){ Id = Guid.Parse("40CE34D7-9CA5-43C1-B14C-E65C414C5AA3"), Name = "PHP"},
             };
-
+            var commentIds = new List<Guid>()
+            {
+                Guid.Parse("C86A7B1A-F13B-4114-9BB3-07CCFDA7199F"),
+                Guid.Parse("D748DD23-43BF-43EC-8846-0F9818BC12C1"),
+                Guid.Parse("F519928F-9AAC-4642-A9C5-4AEA8D7D12E5"),
+                Guid.Parse("6279842F-F37C-4EA9-A7A7-9E027BAFD9F4"),
+                Guid.Parse("F38A1E7D-1A8F-4E68-8864-D2FFE4FA1F52"),
+                Guid.Parse("DEF453F9-025B-4E97-A72D-FE6B13B29934"),
+            };
+            
             string allLangsJson = JsonConvert.SerializeObject(mgr.GetProgrammingLanguages().ToList(), Formatting.Indented);
             Console.WriteLine($"Programming languages:\n{allLangsJson}");
 
