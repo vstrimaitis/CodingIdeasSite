@@ -22,10 +22,8 @@ namespace CodingIdeas.Core
                     using (var adapter = new SqlDataAdapter(selectSql, conn))
                     {
                         var table = new DataTable();
-                        adapter.Fill(table);
+                        adapter.Fill(CommentsPerPage * (pageNumber - 1), CommentsPerPage, table);
                         var comments = table.AsEnumerable()
-                                            .Skip((pageNumber - 1) * CommentsPerPage)
-                                            .Take(CommentsPerPage)
                                             .Select(x => new Comment()
                                             {
                                                 Id = Guid.Parse(x[0].ToString()),

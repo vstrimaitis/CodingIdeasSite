@@ -1,12 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using CodingIdeas.Core;
-using System.Data;
 using Newtonsoft.Json;
-using System.Configuration;
 
 namespace CodingIdeas.TestApp
 {
@@ -14,7 +10,7 @@ namespace CodingIdeas.TestApp
     {
         static void Main(string[] args)
         {
-            IDataTransferManager mgr = new DataTransferManager(5, 10, 15);
+            IDataTransferManager mgr = new DataTransferManager(5, 4, 15);
             /*mgr.AddProgrammingLanguage(new ProgrammingLanguage("Ruby"));
             var langTable = mgr.GetProgrammingLanguages();
             foreach (DataRow row in langTable.Rows)
@@ -46,6 +42,7 @@ namespace CodingIdeas.TestApp
             //mgr.AddSkill(new User() { Id = userId }, langs[6], 1);
             //mgr.AddSkill(new User() { Id = userId }, langs[3], 5);
 
+
             Guid userId = Guid.Parse("77D50F53-36AF-4B3D-81D7-A052B037863E");
             Guid postId = Guid.Parse("66D17B9D-3B67-461F-A6B9-8BEE86DA6148");
             var langs = new List<ProgrammingLanguage>()
@@ -58,7 +55,6 @@ namespace CodingIdeas.TestApp
                 new ProgrammingLanguage(){ Id = Guid.Parse("C086B3DA-DF58-490C-BE2F-C981A334D466"), Name = "Python"},
                 new ProgrammingLanguage(){ Id = Guid.Parse("40CE34D7-9CA5-43C1-B14C-E65C414C5AA3"), Name = "PHP"},
             };
-
 
             string allLangsJson = JsonConvert.SerializeObject(mgr.GetProgrammingLanguages().ToList(), Formatting.Indented);
             Console.WriteLine(allLangsJson);
