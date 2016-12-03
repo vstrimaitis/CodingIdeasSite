@@ -11,7 +11,7 @@ namespace CodingIdeas.Core
     /// </summary>
     struct Constants
     {
-        public const string Schema                      = "coding_ideas";
+        public const string Schema                      = "dbo";
 
         public const string Comment                     = "Comment";
         public const string Post                        = "Post";

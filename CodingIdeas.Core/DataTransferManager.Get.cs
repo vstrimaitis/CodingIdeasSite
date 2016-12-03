@@ -77,7 +77,7 @@ namespace CodingIdeas.Core
         {
             using (var ctx = new DB.CodingIdeasEntities())
             {
-                return ctx.RatedEntities1
+                return ctx.RatedEntities
                           .Where(x => x.UserId == user.Id && x.EntityId == entity.Id)
                           .Select(x => (sbyte)x.Rating)
                           .FirstOrDefault();
@@ -113,7 +113,7 @@ namespace CodingIdeas.Core
 
             using (var ctx = new DB.CodingIdeasEntities())
             {
-                return (from r in ctx.RatedEntities1
+                return (from r in ctx.RatedEntities
                         where r.EntityId == entity.Id
                         select (int)r.Rating).AsEnumerable().Aggregate((x, y) => x + y);
             }

@@ -1,8 +1,7 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CodingIdeas.Core
 {
@@ -72,17 +71,43 @@ namespace CodingIdeas.Core
 
         public void AddRating(User user, IRatable entity, sbyte rating)
         {
-            throw new NotImplementedException();
+            using (var ctx = new DB.CodingIdeasEntities())
+            {
+                ctx.RatedEntities.Add(new DB.RatedEntity() { UserId = user.Id, EntityId = entity.Id, Rating = rating });
+                ctx.SaveChanges();
+            }
         }
 
         public void AddSkill(User user, ProgrammingLanguage language, byte proficiency)
         {
-            throw new NotImplementedException();
+            using (var ctx = new DB.CodingIdeasEntities())
+            {
+                ctx.UserSkills.Add(new DB.UserSkill()
+                {
+                    UserId = user.Id,
+                    ProgrammingLanguage = new DB.ProgrammingLanguage() { Id = language.Id, Name = language.Name },
+                    Proficiency = proficiency
+                });
+                ctx.SaveChanges();
+            }
         }
 
         public void AddUser(User user)
         {
-            throw new NotImplementedException();
+            using (var ctx = new DB.CodingIdeasEntities())
+            {
+                ctx.Users.Add(new DB.User()
+                {
+                    Id = user.Id,
+                    DOB = user.DateOfBirth,
+                    Email = user.Email,
+                    FirstName = user.FirstName,
+                    LastName = user.LastName,
+                    Password = user.PasswordHash,
+                    Username = user.Username
+                });
+                ctx.SaveChanges();
+            }
         }
     }
 }

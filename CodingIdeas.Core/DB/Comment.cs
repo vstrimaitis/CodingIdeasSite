@@ -18,7 +18,7 @@ namespace CodingIdeas.Core.DB
         public System.Guid PostId { get; set; }
         public string Content { get; set; }
     
-        public virtual Post Post { get; set; }
         public virtual RatableEntity RatableEntity { get; set; }
+        public virtual Post Post { get; set; }
     }
 }

@@ -4,23 +4,23 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="2a05aea4d59141aab1744a275d0270d1" Name="Diagram1">
-        <EntityTypeShape EntityType="CodingIdeas.Model.Comment" Width="1.5" PointX="5.25" PointY="3.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="CodingIdeas.Model.Post" Width="1.5" PointX="3" PointY="6.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="CodingIdeas.Model.ProgrammingLanguage" Width="1.5" PointX="5.25" PointY="10.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="CodingIdeas.Model.RatableEntity" Width="1.5" PointX="0.75" PointY="3.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="CodingIdeas.Model.RatedEntity" Width="1.5" PointX="7.5" PointY="5.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="CodingIdeas.Model.User" Width="1.5" PointX="5.25" PointY="6.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="CodingIdeas.Model.UserSkill" Width="1.5" PointX="7.5" PointY="8.625" IsExpanded="true" />
-        <AssociationConnector Association="CodingIdeas.Model.FK_Comment_Post" ManuallyRouted="false" />
-        <AssociationConnector Association="CodingIdeas.Model.FK_Comment_Ratable_Entity" ManuallyRouted="false" />
-        <AssociationConnector Association="CodingIdeas.Model.FK_Post_Ratable_Entity" ManuallyRouted="false" />
-        <AssociationConnector Association="CodingIdeas.Model.FK_User_Skills_Programming_Language" ManuallyRouted="false" />
-        <AssociationConnector Association="CodingIdeas.Model.FK_Ratable_Entity_User" ManuallyRouted="false" />
-        <AssociationConnector Association="CodingIdeas.Model.FK_Rated_Entities_Ratable_Entity" ManuallyRouted="false" />
-        <AssociationConnector Association="CodingIdeas.Model.FK_Rated_Entities_User" ManuallyRouted="false" />
-        <AssociationConnector Association="CodingIdeas.Model.FK_User_Skills_User" ManuallyRouted="false" />
-        <AssociationConnector Association="CodingIdeas.Model.Saved_Posts" ManuallyRouted="false" />
+      <Diagram DiagramId="c1762ee5d8594302a9b39cb20878fac2" Name="Diagram1">
+        <EntityTypeShape EntityType="CodingIdeasModel.Comment" Width="1.5" PointX="5.25" PointY="3.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="CodingIdeasModel.Post" Width="1.5" PointX="3" PointY="6.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="CodingIdeasModel.ProgrammingLanguage" Width="1.5" PointX="5.25" PointY="10.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="CodingIdeasModel.RatableEntity" Width="1.5" PointX="0.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="CodingIdeasModel.RatedEntity" Width="1.5" PointX="7.5" PointY="5.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="CodingIdeasModel.User" Width="1.5" PointX="5.25" PointY="6.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="CodingIdeasModel.UserSkill" Width="1.5" PointX="7.5" PointY="8.625" IsExpanded="true" />
+        <AssociationConnector Association="CodingIdeasModel.FK__Comment__Id__6FE99F9F" ManuallyRouted="false" />
+        <AssociationConnector Association="CodingIdeasModel.FK__Comment__Post_Id__70DDC3D8" ManuallyRouted="false" />
+        <AssociationConnector Association="CodingIdeasModel.FK__Post__Id__693CA210" ManuallyRouted="false" />
+        <AssociationConnector Association="CodingIdeasModel.FK__User_Skil__Progr__5CD6CB2B" ManuallyRouted="false" />
+        <AssociationConnector Association="CodingIdeasModel.FK__Ratable_E__User___619B8048" ManuallyRouted="false" />
+        <AssociationConnector Association="CodingIdeasModel.FK__Rated_Ent__Entit__656C112C" ManuallyRouted="false" />
+        <AssociationConnector Association="CodingIdeasModel.FK__Rated_Ent__User___66603565" ManuallyRouted="false" />
+        <AssociationConnector Association="CodingIdeasModel.FK__User_Skil__User___5BE2A6F2" ManuallyRouted="false" />
+        <AssociationConnector Association="CodingIdeasModel.Saved_Posts" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

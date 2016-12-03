@@ -21,9 +21,16 @@ namespace CodingIdeas.TestApp
             {
                 Console.WriteLine("{0}: {1}", row["Id"], row["Name"]);
             }*/
+
+            /*mgr.AddUser(new User()
+            {
+                Username = "god",
+                Email = "god@gmail.com",
+                PasswordHash = "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8"
+            });*/
+
             
-            
-            
+
             string allLangsJson = JsonConvert.SerializeObject(mgr.GetProgrammingLanguages().ToList(), Formatting.Indented);
             Console.WriteLine(allLangsJson);
 

@@ -55,17 +55,17 @@
     <Compile Include="Constants.cs" />
     <Compile Include="DataTransferManager.cs" />
     <Compile Include="DataTransferManager.Add.cs">
-		<DependentUpon>DataTransferManager.cs</DependentUpon>
-	</Compile>
+      <DependentUpon>DataTransferManager.cs</DependentUpon>
+    </Compile>
     <Compile Include="DataTransferManager.Get.cs">
-		<DependentUpon>DataTransferManager.cs</DependentUpon>
-	</Compile>
+      <DependentUpon>DataTransferManager.cs</DependentUpon>
+    </Compile>
     <Compile Include="DataTransferManager.Remove.cs">
-		<DependentUpon>DataTransferManager.cs</DependentUpon>
-	</Compile>
+      <DependentUpon>DataTransferManager.cs</DependentUpon>
+    </Compile>
     <Compile Include="DataTransferManager.Update.cs">
-		<DependentUpon>DataTransferManager.cs</DependentUpon>
-	</Compile>
+      <DependentUpon>DataTransferManager.cs</DependentUpon>
+    </Compile>
     <Compile Include="DataTransferObjects\Comment.cs" />
     <Compile Include="DataTransferObjects\IRatable.cs" />
     <Compile Include="DataTransferObjects\Post.cs" />
@@ -112,34 +112,35 @@
     <Compile Include="IDataTransferManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
+    <None Include="App.Config" />
     <EntityDeploy Include="DB\CodingIdeasDataModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>CodingIdeasDataModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.Config" />
     <None Include="DB\CodingIdeasDataModel.edmx.diagram">
       <DependentUpon>CodingIdeasDataModel.edmx</DependentUpon>
     </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
     <Content Include="DB\CodingIdeasDataModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>CodingIdeasDataModel.Context.cs</LastGenOutput>
       <DependentUpon>CodingIdeasDataModel.edmx</DependentUpon>
+      <LastGenOutput>CodingIdeasDataModel.Context.cs</LastGenOutput>
     </Content>
     <Content Include="DB\CodingIdeasDataModel.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>CodingIdeasDataModel.edmx</DependentUpon>
       <LastGenOutput>CodingIdeasDataModel.cs</LastGenOutput>
     </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+    <Content Include="DB\scripts\create_indexes.sql" />
+    <Content Include="DB\scripts\create_tables.sql" />
+    <Content Include="DB\scripts\create_triggers.sql" />
+    <Content Include="DB\scripts\create_views.sql" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

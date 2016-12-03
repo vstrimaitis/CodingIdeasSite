@@ -29,7 +29,7 @@ namespace CodingIdeas.Core.DB
         public virtual DbSet<Post> Posts { get; set; }
         public virtual DbSet<ProgrammingLanguage> ProgrammingLanguages { get; set; }
         public virtual DbSet<RatableEntity> RatableEntities { get; set; }
-        public virtual DbSet<RatedEntity> RatedEntities1 { get; set; }
+        public virtual DbSet<RatedEntity> RatedEntities { get; set; }
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<UserSkill> UserSkills { get; set; }
     }
