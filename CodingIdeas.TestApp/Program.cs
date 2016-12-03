@@ -43,7 +43,7 @@ namespace CodingIdeas.TestApp
             //mgr.AddSkill(new User() { Id = userId }, langs[3], 5);
 
 
-            Guid userId = Guid.Parse("77D50F53-36AF-4B3D-81D7-A052B037863E");
+            Guid userId = Guid.Parse("430F1043-9250-4E4E-8F77-2AEF475988A4");
             Guid postId = Guid.Parse("66D17B9D-3B67-461F-A6B9-8BEE86DA6148");
             var langs = new List<ProgrammingLanguage>()
             {
@@ -57,7 +57,7 @@ namespace CodingIdeas.TestApp
             };
 
             string allLangsJson = JsonConvert.SerializeObject(mgr.GetProgrammingLanguages().ToList(), Formatting.Indented);
-            Console.WriteLine(allLangsJson);
+            Console.WriteLine($"Programming languages:\n{allLangsJson}");
 
             //mgr.AddComment(new Comment(Guid.Parse("A5E98261-A753-4249-B092-AF7ADA603B36"), DateTime.Now, Guid.Parse("04F64928-39EB-4798-8295-2ABD23BD92DF"), "sample comment"));
             //mgr.RemoveComment(new Comment() { Id = Guid.Parse("A5DB3883-CD62-4421-AB4F-5F89BC6B061A") });
