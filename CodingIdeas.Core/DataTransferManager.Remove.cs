@@ -48,11 +48,6 @@ namespace CodingIdeas.Core
             throw new NotImplementedException();
         }
 
-        public void Save(User user, Post postToSave)
-        {
-            throw new NotImplementedException();
-        }
-
         public void Unsave(User user, Post post)
         {
             throw new NotImplementedException();

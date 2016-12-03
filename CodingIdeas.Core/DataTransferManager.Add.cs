@@ -85,7 +85,7 @@ namespace CodingIdeas.Core
                 ctx.UserSkills.Add(new DB.UserSkill()
                 {
                     UserId = user.Id,
-                    ProgrammingLanguage = new DB.ProgrammingLanguage() { Id = language.Id, Name = language.Name },
+                    ProgrammingLanguageId = language.Id,
                     Proficiency = proficiency
                 });
                 ctx.SaveChanges();
@@ -106,6 +106,16 @@ namespace CodingIdeas.Core
                     Password = user.PasswordHash,
                     Username = user.Username
                 });
+                ctx.SaveChanges();
+            }
+        }
+        
+        public void Save(User user, Post postToSave)
+        {
+            using (var ctx = new DB.CodingIdeasEntities())
+            {
+                var post = ctx.Posts.Where(x => x.Id == postToSave.Id).First();
+                ctx.Users.Where(x => x.Id == user.Id).First().SavedPosts.Add(post);
                 ctx.SaveChanges();
             }
         }

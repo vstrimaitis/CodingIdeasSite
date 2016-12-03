@@ -23,18 +23,19 @@ namespace CodingIdeas.Core
                     {
                         var table = new DataTable();
                         adapter.Fill(table);
-                        foreach (DataRow row in table.Rows)
-                        {
-                            var comment = new Comment()
-                            {
-                                Id = Guid.Parse(row[0].ToString()),
-                                PostId = post.Id,
-                                Content = row[1].ToString(),
-                                AuthorId = Guid.Parse(row[2].ToString()),
-                                PublishDate = DateTime.Parse(row[3].ToString())
-                            };
-                            yield return comment;
-                        }
+                        var comments = table.AsEnumerable()
+                                            .Skip((pageNumber - 1) * CommentsPerPage)
+                                            .Take(CommentsPerPage)
+                                            .Select(x => new Comment()
+                                            {
+                                                Id = Guid.Parse(x[0].ToString()),
+                                                PostId = post.Id,
+                                                Content = x[1].ToString(),
+                                                AuthorId = Guid.Parse(x[2].ToString()),
+                                                PublishDate = DateTime.Parse(x[3].ToString())
+                                            });
+                        foreach (var c in comments)
+                            yield return c;
                     }
                 }
             }

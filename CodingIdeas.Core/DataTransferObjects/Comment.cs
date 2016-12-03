@@ -10,7 +10,7 @@ namespace CodingIdeas.Core
         public Guid PostId { get; set; }
         public string Content { get; set; }
 
-        public Comment(Guid authorId, DateTime publishDate, Guid postId, string content)
+        public Comment(Guid authorId, Guid postId, DateTime publishDate, string content)
         {
             Id = Guid.NewGuid();
             AuthorId = authorId;
