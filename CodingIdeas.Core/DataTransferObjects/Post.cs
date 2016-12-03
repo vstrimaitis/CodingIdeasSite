@@ -2,6 +2,15 @@
 
 namespace CodingIdeas.Core
 {
+    [Flags]
+    public enum PostProperties
+    {
+        None = 0,
+        Title = 1,
+        Content = 2,
+        All = 3
+    }
+
     public struct Post : IRatable
     {
         public Guid Id { get; set; }

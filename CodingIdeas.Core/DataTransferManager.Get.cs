@@ -9,7 +9,7 @@ namespace CodingIdeas.Core
 {
     public partial class DataTransferManager
     {
-        public IEnumerable<Comment> GetComments(Post post, int pageNumber)
+        public IEnumerable<Comment> GetComments(Guid postId, int pageNumber)
         {
             using (var ctx = new DB.CodingIdeasEntities())
             {
@@ -17,7 +17,7 @@ namespace CodingIdeas.Core
                 {
                     string selectSql = $@"SELECT C.[{Constants.Comment_Id}], C.[{Constants.Comment_Content}], R.[{Constants.RatableEntity_UserId}], R.[{Constants.RatableEntity_PublishDate}]
                                           FROM [{Constants.Schema}].[{Constants.Comment}] as C
-                                          LEFT JOIN [{Constants.Schema}].[{Constants.RatableEntity}] AS R ON R.[{Constants.RatableEntity_Id}] = C.[{Constants.Comment_Id}] AND C.[{Constants.Comment_PostId}] = '{post.Id}'
+                                          LEFT JOIN [{Constants.Schema}].[{Constants.RatableEntity}] AS R ON R.[{Constants.RatableEntity_Id}] = C.[{Constants.Comment_Id}] AND C.[{Constants.Comment_PostId}] = '{postId}'
                                           ORDER BY R.[{Constants.RatableEntity_PublishDate}] DESC";
                     using (var adapter = new SqlDataAdapter(selectSql, conn))
                     {
@@ -27,7 +27,7 @@ namespace CodingIdeas.Core
                                             .Select(x => new Comment()
                                             {
                                                 Id = Guid.Parse(x[0].ToString()),
-                                                PostId = post.Id,
+                                                PostId = postId,
                                                 Content = x[1].ToString(),
                                                 AuthorId = Guid.Parse(x[2].ToString()),
                                                 PublishDate = DateTime.Parse(x[3].ToString())
@@ -72,23 +72,23 @@ namespace CodingIdeas.Core
             }
         }
 
-        public sbyte GetRatingByUser(User user, IRatable entity)
+        public sbyte GetRatingByUser(Guid userId, Guid entityId)
         {
             using (var ctx = new DB.CodingIdeasEntities())
             {
                 return ctx.RatedEntities
-                          .Where(x => x.UserId == user.Id && x.EntityId == entity.Id)
+                          .Where(x => x.UserId == userId && x.EntityId == entityId)
                           .Select(x => (sbyte)x.Rating)
                           .FirstOrDefault();
             }
         }
 
-        public IEnumerable<Post> GetSavedPosts(User user, int pageNumber)
+        public IEnumerable<Post> GetSavedPosts(Guid userId, int pageNumber)
         {
             using (var ctx = new DB.CodingIdeasEntities())
             {
                 var saved = ctx.Users
-                            .Where(x => x.Id == user.Id)
+                            .Where(x => x.Id == userId)
                             .FirstOrDefault()
                             .SavedPosts
                             .Skip((pageNumber - 1) * SavedPostsPerPage)
@@ -107,18 +107,18 @@ namespace CodingIdeas.Core
             }
         }
 
-        public int GetTotalRating(IRatable entity)
+        public int GetTotalRating(Guid entityId)
         {
 
             using (var ctx = new DB.CodingIdeasEntities())
             {
                 return (from r in ctx.RatedEntities
-                        where r.EntityId == entity.Id
+                        where r.EntityId == entityId
                         select (int)r.Rating).AsEnumerable().Aggregate((x, y) => x + y);
             }
         }
 
-        public User GetUser(string login, string passwordHash)
+        public User GetUserInfo(string login, string passwordHash)
         {
             using (var ctx = new DB.CodingIdeasEntities())
             {

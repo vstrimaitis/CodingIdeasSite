@@ -53,7 +53,6 @@ namespace CodingIdeas.TestApp
                 new ProgrammingLanguage(){ Id = Guid.Parse("0B52E310-AE60-46CE-A737-8555770EF994"), Name = "C#"},
                 new ProgrammingLanguage(){ Id = Guid.Parse("50541CC1-EB66-4C75-853D-9BFB340522BD"), Name = "C"},
                 new ProgrammingLanguage(){ Id = Guid.Parse("C086B3DA-DF58-490C-BE2F-C981A334D466"), Name = "Python"},
-                new ProgrammingLanguage(){ Id = Guid.Parse("40CE34D7-9CA5-43C1-B14C-E65C414C5AA3"), Name = "PHP"},
             };
             var commentIds = new List<Guid>()
             {
@@ -65,12 +64,13 @@ namespace CodingIdeas.TestApp
                 Guid.Parse("DEF453F9-025B-4E97-A72D-FE6B13B29934"),
             };
             
+            
             string allLangsJson = JsonConvert.SerializeObject(mgr.GetProgrammingLanguages().ToList(), Formatting.Indented);
             Console.WriteLine($"Programming languages:\n{allLangsJson}");
 
             //mgr.AddComment(new Comment(Guid.Parse("A5E98261-A753-4249-B092-AF7ADA603B36"), DateTime.Now, Guid.Parse("04F64928-39EB-4798-8295-2ABD23BD92DF"), "sample comment"));
             //mgr.RemoveComment(new Comment() { Id = Guid.Parse("A5DB3883-CD62-4421-AB4F-5F89BC6B061A") });
-            string commentsJson = JsonConvert.SerializeObject(mgr.GetComments(new Post() { Id = postId }, 1).ToList(), Formatting.Indented);
+            string commentsJson = JsonConvert.SerializeObject(mgr.GetComments(postId, 1).ToList(), Formatting.Indented);
             Console.WriteLine($"Comments: \n{commentsJson}");
 
             //mgr.AddPost(new Post(Guid.Parse("A5E98261-A753-4249-B092-AF7ADA603B36"), DateTime.Now.AddDays(-2), "Sample title", "Sample content content content"));
@@ -78,10 +78,10 @@ namespace CodingIdeas.TestApp
             string postsJson = JsonConvert.SerializeObject(mgr.GetPosts(1).ToList(), Formatting.Indented);
             Console.WriteLine($"Posts:\n{postsJson}");
 
-            string userJson = JsonConvert.SerializeObject(mgr.GetUser("god@gmail.com", "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8"), Formatting.Indented);
+            string userJson = JsonConvert.SerializeObject(mgr.GetUserInfo("god@gmail.com", "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8"), Formatting.Indented);
             Console.WriteLine($"User:\n{userJson}");
 
-            string savedPosts = JsonConvert.SerializeObject(mgr.GetSavedPosts(new User() { Id = userId }, 1), Formatting.Indented);
+            string savedPosts = JsonConvert.SerializeObject(mgr.GetSavedPosts(userId, 1), Formatting.Indented);
             Console.WriteLine($"Saved posts:\n{savedPosts}");
             
 

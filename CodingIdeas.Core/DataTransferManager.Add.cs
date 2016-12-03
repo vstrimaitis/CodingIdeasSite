@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 
 namespace CodingIdeas.Core
 {
@@ -66,23 +67,23 @@ namespace CodingIdeas.Core
             }
         }
 
-        public void AddRating(User user, IRatable entity, sbyte rating)
+        public void AddRating(Guid userId, Guid entityId, sbyte rating)
         {
             using (var ctx = new DB.CodingIdeasEntities())
             {
-                ctx.RatedEntities.Add(new DB.RatedEntity() { UserId = user.Id, EntityId = entity.Id, Rating = rating });
+                ctx.RatedEntities.Add(new DB.RatedEntity() { UserId = userId, EntityId = entityId, Rating = rating });
                 ctx.SaveChanges();
             }
         }
 
-        public void AddSkill(User user, ProgrammingLanguage language, byte proficiency)
+        public void AddSkill(Guid userId, Guid languageId, byte proficiency)
         {
             using (var ctx = new DB.CodingIdeasEntities())
             {
                 ctx.UserSkills.Add(new DB.UserSkill()
                 {
-                    UserId = user.Id,
-                    ProgrammingLanguageId = language.Id,
+                    UserId = userId,
+                    ProgrammingLanguageId = languageId,
                     Proficiency = proficiency
                 });
                 ctx.SaveChanges();
@@ -107,12 +108,12 @@ namespace CodingIdeas.Core
             }
         }
         
-        public void Save(User user, Post postToSave)
+        public void Save(Guid userId, Guid postToSaveId)
         {
             using (var ctx = new DB.CodingIdeasEntities())
             {
-                var post = ctx.Posts.Where(x => x.Id == postToSave.Id).First();
-                ctx.Users.Where(x => x.Id == user.Id).First().SavedPosts.Add(post);
+                var post = ctx.Posts.Where(x => x.Id == postToSaveId).First();
+                ctx.Users.Where(x => x.Id == userId).First().SavedPosts.Add(post);
                 ctx.SaveChanges();
             }
         }
