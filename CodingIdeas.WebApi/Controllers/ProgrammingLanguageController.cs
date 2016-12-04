@@ -47,18 +47,15 @@ namespace CodingIdeas.WebApi.Controllers
 
         // PUT: api/ProgrammingLanguage/5
         [HttpPut]
-        public IHttpActionResult Put(string id, [FromBody]JObject value)
+        public IHttpActionResult Put([FromBody]JObject value)
         {
             var mgr = WebApiApplication.Manager;
-            Guid guid;
-            if (!Guid.TryParse(id, out guid))
-                return Content(HttpStatusCode.BadRequest, "Invalid GUID format");
             var lang = value.ToObject<ProgrammingLanguage>();
             if (string.IsNullOrWhiteSpace(lang.Name))
                 return Content(HttpStatusCode.BadRequest, "Name cannot be null");
             if (lang.Id == Guid.Empty)
                 lang.Id = Guid.NewGuid();
-            mgr.AddProgrammingLanguage(lang);
+            mgr.UpdateProgrammingLanguage(lang.Id, lang.Name);
             return Ok();
         }
 
