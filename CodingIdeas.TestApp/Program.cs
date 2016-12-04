@@ -63,7 +63,8 @@ namespace CodingIdeas.TestApp
                 Guid.Parse("F38A1E7D-1A8F-4E68-8864-D2FFE4FA1F52"),
                 Guid.Parse("DEF453F9-025B-4E97-A72D-FE6B13B29934"),
             };
-            
+
+            mgr.AddUser(new User() { Email = "A@A.A" });
 
             string allLangsJson = JsonConvert.SerializeObject(mgr.GetProgrammingLanguages().ToList(), Formatting.Indented);
             Console.WriteLine($"Programming languages:\n{allLangsJson}");

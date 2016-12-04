@@ -11,7 +11,7 @@ namespace CodingIdeas.Core
         private const string _passwordPattern = "^[a-f0-9]{64}$";
         private void ValidateComment(Comment comment, CommentProperties props)
         {
-            if (props.HasFlag(CommentProperties.Content) && string.IsNullOrWhiteSpace(comment.Content))
+            if (comment.Content == null || props.HasFlag(CommentProperties.Content) && string.IsNullOrWhiteSpace(comment.Content))
                 throw new InvalidContentException();
             if (props.HasFlag(CommentProperties.PublishDate) && comment.PublishDate > DateTime.Now)
                 throw new InvalidPublishDateException("The publish date cannot be in the future.");
@@ -29,9 +29,9 @@ namespace CodingIdeas.Core
 
         private void ValidatePost(Post post, PostProperties props)
         {
-            if (props.HasFlag(PostProperties.Content) && string.IsNullOrWhiteSpace(post.Content))
+            if (post.Content == null || props.HasFlag(PostProperties.Content) && string.IsNullOrWhiteSpace(post.Content))
                 throw new InvalidContentException();
-            if (props.HasFlag(PostProperties.Title) && string.IsNullOrWhiteSpace(post.Title))
+            if (post.Title == null || props.HasFlag(PostProperties.Title) && string.IsNullOrWhiteSpace(post.Title))
                 throw new InvalidTitleException();
             if (props.HasFlag(PostProperties.PublishDate) && post.PublishDate > DateTime.Now)
                 throw new InvalidPublishDateException("The publish date cannot be in the future.");
@@ -70,11 +70,11 @@ namespace CodingIdeas.Core
 
         private void ValidateUser(User user, UserProperties props)
         {
-            if (props.HasFlag(UserProperties.Email) && !Regex.IsMatch(user.Email, _emailPattern, RegexOptions.IgnoreCase))
+            if (user.Email == null || props.HasFlag(UserProperties.Email) && !Regex.IsMatch(user.Email, _emailPattern, RegexOptions.IgnoreCase))
                 throw new InvalidEmailException();
-            if (props.HasFlag(UserProperties.PasswordHash) && !Regex.IsMatch(user.PasswordHash, _passwordPattern, RegexOptions.IgnoreCase))
+            if (user.PasswordHash == null || props.HasFlag(UserProperties.PasswordHash) && !Regex.IsMatch(user.PasswordHash, _passwordPattern, RegexOptions.IgnoreCase))
                 throw new InvalidPasswordHashException();
-            if (props.HasFlag(UserProperties.DateOfBirth) && user.DateOfBirth >= DateTime.Now)
+            if (user.DateOfBirth != null && props.HasFlag(UserProperties.DateOfBirth) && user.DateOfBirth >= DateTime.Now)
                 throw new InvalidDateOfBirthException();
         }
 
