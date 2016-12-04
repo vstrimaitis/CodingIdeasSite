@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodingIdeas.Core", "CodingI
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodingIdeas.TestApp", "CodingIdeas.TestApp\CodingIdeas.TestApp.csproj", "{26DAC81C-8B9C-4F7F-A0BC-3454B18D7508}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodingIdeas.WebApi", "CodingIdeas.WebApi\CodingIdeas.WebApi.csproj", "{D35C0F3E-2CD1-42AB-9B61-0EBBE7F03ED9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{26DAC81C-8B9C-4F7F-A0BC-3454B18D7508}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{26DAC81C-8B9C-4F7F-A0BC-3454B18D7508}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{26DAC81C-8B9C-4F7F-A0BC-3454B18D7508}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D35C0F3E-2CD1-42AB-9B61-0EBBE7F03ED9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D35C0F3E-2CD1-42AB-9B61-0EBBE7F03ED9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D35C0F3E-2CD1-42AB-9B61-0EBBE7F03ED9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D35C0F3E-2CD1-42AB-9B61-0EBBE7F03ED9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

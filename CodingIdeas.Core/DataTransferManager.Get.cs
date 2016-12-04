@@ -125,7 +125,9 @@ namespace CodingIdeas.Core
             {
                 return (from r in ctx.RatedEntities
                         where r.EntityId == entityId
-                        select (int)r.Rating).AsEnumerable().Aggregate((x, y) => x + y);
+                        select (int)r.Rating)
+                        .AsEnumerable()
+                        .Aggregate((x, y) => x + y);
             }
         }
         
