@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CodingIdeas.Core.Exceptions;
+using System;
 using System.Linq;
 
 namespace CodingIdeas.Core
@@ -9,7 +10,10 @@ namespace CodingIdeas.Core
         {
             using (var ctx = new DB.CodingIdeasEntities())
             {
-                ctx.RatableEntities.Remove(ctx.RatableEntities.Where(x => x.Id == entityId).First());
+                var entity = ctx.RatableEntities.Where(x => x.Id == entityId).FirstOrDefault();
+                if (entity == null)
+                    throw new RatableEntityNotFoundException();
+                ctx.RatableEntities.Remove(entity);
                 ctx.SaveChanges();
             }
         }
@@ -28,7 +32,10 @@ namespace CodingIdeas.Core
         {
             using (var ctx = new DB.CodingIdeasEntities())
             {
-                ctx.ProgrammingLanguages.Remove(ctx.ProgrammingLanguages.Where(x => x.Id == languageId).First());
+                var lang = ctx.ProgrammingLanguages.Where(x => x.Id == languageId).FirstOrDefault();
+                if (lang == null)
+                    throw new ProgrammingLanguageNotFoundException();
+                ctx.ProgrammingLanguages.Remove(lang);
                 ctx.SaveChanges();
             }
         }
@@ -37,7 +44,14 @@ namespace CodingIdeas.Core
         {
             using (var ctx = new DB.CodingIdeasEntities())
             {
-                ctx.RatedEntities.Remove(ctx.RatedEntities.Where(x => x.EntityId == entityId && x.UserId == userId).First());
+                if (ctx.Users.Where(x => x.Id == userId).FirstOrDefault() == null)
+                    throw new UserNotFoundException();
+                if (ctx.RatableEntities.Where(x => x.Id == entityId).FirstOrDefault() == null)
+                    throw new RatableEntityNotFoundException();
+                var rating = ctx.RatedEntities.Where(x => x.EntityId == entityId && x.UserId == userId).FirstOrDefault();
+                if (rating == null)
+                    throw new RatingNotFoundException();
+                ctx.RatedEntities.Remove(rating);
                 ctx.SaveChanges();
             }
         }
@@ -46,7 +60,14 @@ namespace CodingIdeas.Core
         {
             using (var ctx = new DB.CodingIdeasEntities())
             {
-                ctx.UserSkills.Remove(ctx.UserSkills.Where(x => x.UserId == userId && x.ProgrammingLanguageId == languageId).First());
+                if (ctx.Users.Where(x => x.Id == userId).FirstOrDefault() == null)
+                    throw new UserNotFoundException();
+                if (ctx.ProgrammingLanguages.Where(x => x.Id == languageId).FirstOrDefault() == null)
+                    throw new ProgrammingLanguageNotFoundException();
+                var skill = ctx.UserSkills.Where(x => x.UserId == userId && x.ProgrammingLanguageId == languageId).FirstOrDefault();
+                if (skill == null)
+                    throw new UserSkillNotFoundException();
+                ctx.UserSkills.Remove(skill);
                 ctx.SaveChanges();
             }
         }
@@ -55,7 +76,10 @@ namespace CodingIdeas.Core
         {
             using (var ctx = new DB.CodingIdeasEntities())
             {
-                ctx.Users.Remove(ctx.Users.Where(x => x.Id == userId).First());
+                var user = ctx.Users.Where(x => x.Id == userId).FirstOrDefault();
+                if (user == null)
+                    throw new UserNotFoundException();
+                ctx.Users.Remove(user);
                 ctx.SaveChanges();
             }
         }
@@ -64,8 +88,13 @@ namespace CodingIdeas.Core
         {
             using (var ctx = new DB.CodingIdeasEntities())
             {
-                var u = ctx.Users.Where(x => x.Id == userId).First();
-                u.SavedPosts.Remove(u.SavedPosts.Where(x => x.Id == postId).First());
+                var user = ctx.Users.Where(x => x.Id == userId).FirstOrDefault();
+                if (user == null)
+                    throw new UserNotFoundException();
+                var savedPost = user.SavedPosts.Where(x => x.Id == postId).FirstOrDefault();
+                if (savedPost == null)
+                    throw new SavedPostNotFoundException();
+                user.SavedPosts.Remove(savedPost);
                 ctx.SaveChanges();
             }
         }

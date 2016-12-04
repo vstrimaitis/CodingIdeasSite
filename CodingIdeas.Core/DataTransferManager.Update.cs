@@ -7,6 +7,7 @@ namespace CodingIdeas.Core
     {
         public void UpdateComment(Guid oldCommentId, string newContent)
         {
+            ValidateComment(new Comment() { Content = newContent }, CommentProperties.Content);
             using (var ctx = new DB.CodingIdeasEntities())
             {
                 var c = ctx.Comments.Where(x => x.Id == oldCommentId).First();
@@ -17,6 +18,7 @@ namespace CodingIdeas.Core
 
         public void UpdatePost(Guid oldPostId, Post @new, PostProperties propertiesToChange)
         {
+            ValidatePost(@new, propertiesToChange);
             using (var ctx = new DB.CodingIdeasEntities())
             {
                 var p = ctx.Posts.Where(x => x.Id == oldPostId).First();
@@ -40,6 +42,7 @@ namespace CodingIdeas.Core
 
         public void UpdateRating(Guid userId, Guid entityId, sbyte newRating)
         {
+            ValidateRating(userId, entityId, newRating);
             using (var ctx = new DB.CodingIdeasEntities())
             {
                 var r = ctx.RatedEntities.Where(x => x.UserId == userId && x.EntityId == entityId).First();
@@ -50,6 +53,7 @@ namespace CodingIdeas.Core
 
         public void UpdateUser(Guid oldUserId, User @new, UserProperties propertiesToChange)
         {
+            ValidateUser(@new, propertiesToChange);
             using (var ctx = new DB.CodingIdeasEntities())
             {
                 var r = ctx.Users.Where(x => x.Id == oldUserId).First();
@@ -71,6 +75,7 @@ namespace CodingIdeas.Core
         
         public void UpdateSkill(Guid userId, Guid languageId, byte proficiency)
         {
+            ValidateSkill(userId, languageId, proficiency);
             using (var ctx = new DB.CodingIdeasEntities())
             {
                 var s = ctx.UserSkills.Where(x => x.UserId == userId && x.ProgrammingLanguageId == languageId).First();

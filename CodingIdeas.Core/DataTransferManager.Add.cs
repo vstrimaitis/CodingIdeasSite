@@ -7,11 +7,12 @@ namespace CodingIdeas.Core
     {
         public void AddComment(Comment comment)
         {
+            ValidateComment(comment, CommentProperties.All);
             var commentModel = new DB.Comment()
             {
                 Id = comment.Id,
                 Content = comment.Content,
-                PostId = comment.PostId
+                PostId = comment.PostId,
             };
 
             var ratableEntityModel = new DB.RatableEntity()
@@ -28,9 +29,10 @@ namespace CodingIdeas.Core
                 ctx.SaveChanges();
             }
         }
-
+        
         public void AddPost(Post post)
         {
+            ValidatePost(post, PostProperties.All);
             var postModel = new DB.Post()
             {
                 Id = post.Id,
@@ -66,9 +68,10 @@ namespace CodingIdeas.Core
                 ctx.SaveChanges();
             }
         }
-
+        
         public void AddRating(Guid userId, Guid entityId, sbyte rating)
         {
+            ValidateRating(userId, entityId, rating);
             using (var ctx = new DB.CodingIdeasEntities())
             {
                 ctx.RatedEntities.Add(new DB.RatedEntity() { UserId = userId, EntityId = entityId, Rating = rating });
@@ -78,6 +81,7 @@ namespace CodingIdeas.Core
 
         public void AddSkill(Guid userId, Guid languageId, byte proficiency)
         {
+            ValidateSkill(userId, languageId, proficiency);
             using (var ctx = new DB.CodingIdeasEntities())
             {
                 ctx.UserSkills.Add(new DB.UserSkill()
@@ -92,6 +96,7 @@ namespace CodingIdeas.Core
 
         public void AddUser(User user)
         {
+            ValidateUser(user, UserProperties.All);
             using (var ctx = new DB.CodingIdeasEntities())
             {
                 ctx.Users.Add(new DB.User()
@@ -107,9 +112,10 @@ namespace CodingIdeas.Core
                 ctx.SaveChanges();
             }
         }
-        
+
         public void Save(Guid userId, Guid postToSaveId)
         {
+            ValidateSavePost(userId, postToSaveId);
             using (var ctx = new DB.CodingIdeasEntities())
             {
                 var post = ctx.Posts.Where(x => x.Id == postToSaveId).First();

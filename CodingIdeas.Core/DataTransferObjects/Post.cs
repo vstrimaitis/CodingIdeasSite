@@ -6,9 +6,12 @@ namespace CodingIdeas.Core
     public enum PostProperties
     {
         None = 0,
-        Title = 1,
-        Content = 2,
-        All = 3
+        Id = 1,
+        AuthorId = 2,
+        PublishDate = 4,
+        Title = 8,
+        Content = 16,
+        All = 31
     }
 
     public struct Post : IRatable

@@ -7,13 +7,14 @@ namespace CodingIdeas.Core
     public enum UserProperties
     {
         None = 0,
-        Email = 1,
-        Username = 2,
-        FirstName = 4,
-        LastName = 8,
-        DateOfBirth = 16,
-        PasswordHash = 32,
-        All = 64
+        Id = 1,
+        Email = 2,
+        Username = 4,
+        FirstName = 8,
+        LastName = 16,
+        DateOfBirth = 32,
+        PasswordHash = 64,
+        All = 127
     }
 
     public struct User

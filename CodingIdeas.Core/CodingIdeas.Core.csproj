@@ -66,6 +66,9 @@
     <Compile Include="DataTransferManager.Update.cs">
       <DependentUpon>DataTransferManager.cs</DependentUpon>
     </Compile>
+    <Compile Include="DataTransferManager.Validate.cs">
+      <DependentUpon>DataTransferManager.cs</DependentUpon>
+    </Compile>
     <Compile Include="DataTransferObjects\Comment.cs" />
     <Compile Include="DataTransferObjects\IRatable.cs" />
     <Compile Include="DataTransferObjects\Post.cs" />
@@ -108,9 +111,22 @@
     <Compile Include="DB\UserSkill.cs">
       <DependentUpon>CodingIdeasDataModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Exceptions\InvalidContentException.cs" />
+    <Compile Include="Exceptions\InvalidDateOfBirthException.cs" />
+    <Compile Include="Exceptions\InvalidEmailException.cs" />
     <Compile Include="Exceptions\InvalidPageNumberException.cs" />
+    <Compile Include="Exceptions\InvalidPasswordHashException.cs" />
+    <Compile Include="Exceptions\InvalidProficiencyException.cs" />
+    <Compile Include="Exceptions\InvalidPublishDateException.cs" />
+    <Compile Include="Exceptions\InvalidRatingException.cs" />
+    <Compile Include="Exceptions\InvalidTitleException.cs" />
     <Compile Include="Exceptions\PostNotFoundException.cs" />
+    <Compile Include="Exceptions\ProgrammingLanguageNotFoundException.cs" />
+    <Compile Include="Exceptions\RatableEntityNotFoundException.cs" />
+    <Compile Include="Exceptions\RatingNotFoundException.cs" />
+    <Compile Include="Exceptions\SavedPostNotFoundException.cs" />
     <Compile Include="Exceptions\UserNotFoundException.cs" />
+    <Compile Include="Exceptions\UserSkillNotFoundException.cs" />
     <Compile Include="IDataTransferManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

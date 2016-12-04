@@ -64,16 +64,10 @@ namespace CodingIdeas.TestApp
                 Guid.Parse("DEF453F9-025B-4E97-A72D-FE6B13B29934"),
             };
             
+
             string allLangsJson = JsonConvert.SerializeObject(mgr.GetProgrammingLanguages().ToList(), Formatting.Indented);
             Console.WriteLine($"Programming languages:\n{allLangsJson}");
-
-            var newUser = new User("vstrimaitis@gmail.com", "vstrimaitis", "Vytautas", "Strimaitis", DateTime.Parse("1997-02-21"), "aaa", null);
-            var newPost = new Post(newUser.Id, DateTime.Now, "A", "abc");
-
-            mgr.AddUser(newUser);
-            mgr.AddPost(newPost);
-            mgr.RemoveUser(newUser.Id);
-
+            
             //mgr.AddComment(new Comment(Guid.Parse("A5E98261-A753-4249-B092-AF7ADA603B36"), DateTime.Now, Guid.Parse("04F64928-39EB-4798-8295-2ABD23BD92DF"), "sample comment"));
             //mgr.RemoveComment(new Comment() { Id = Guid.Parse("A5DB3883-CD62-4421-AB4F-5F89BC6B061A") });
             string commentsJson = JsonConvert.SerializeObject(mgr.GetComments(postId, 1).ToList(), Formatting.Indented);
