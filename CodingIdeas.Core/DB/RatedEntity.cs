@@ -11,7 +11,7 @@ namespace CodingIdeas.Core.DB
 {
     using System;
 
-    public partial class RatedEntity
+    partial class RatedEntity
     {
         public Guid EntityId { get; set; }
         public Guid UserId { get; set; }

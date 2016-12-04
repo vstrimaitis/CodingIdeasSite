@@ -12,7 +12,7 @@ namespace CodingIdeas.Core.DB
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
 
-    public partial class CodingIdeasEntities : DbContext
+    partial class CodingIdeasEntities : DbContext
     {
         public CodingIdeasEntities()
             : base("name=CodingIdeasEntities")

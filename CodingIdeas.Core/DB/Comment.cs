@@ -11,7 +11,7 @@ namespace CodingIdeas.Core.DB
 {
     using System;
 
-    public partial class Comment
+    partial class Comment
     {
         public Guid Id { get; set; }
         public Guid PostId { get; set; }

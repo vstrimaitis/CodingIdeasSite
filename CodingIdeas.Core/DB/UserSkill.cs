@@ -11,7 +11,7 @@ namespace CodingIdeas.Core.DB
 {
     using System;
 
-    public partial class UserSkill
+    partial class UserSkill
     {
         public Guid UserId { get; set; }
         public Guid ProgrammingLanguageId { get; set; }

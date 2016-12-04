@@ -12,7 +12,7 @@ namespace CodingIdeas.Core.DB
     using System;
     using System.Collections.Generic;
     
-    public partial class User
+    partial class User
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public User()
