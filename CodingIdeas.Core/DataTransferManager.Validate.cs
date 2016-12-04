@@ -27,7 +27,7 @@ namespace CodingIdeas.Core
                 var post = ctx.Posts.Where(x => x.Id == comment.PostId).FirstOrDefault();
                 if (props.HasFlag(CommentProperties.PostId) && post == null)
                     throw new PostNotFoundException();
-                if (props.HasFlag(CommentProperties.PublishDate) && comment.PublishDate < post.RatableEntity.PublishDate)
+                if (props.HasFlag(CommentProperties.PublishDate) && comment.PublishDate < ctx.RatableEntities.Where(x => x.Id == comment.PostId).FirstOrDefault().PublishDate)
                     throw new InvalidPublishDateException("The comment cannot be published before the post.");
                 if (props.HasFlag(CommentProperties.AuthorId) && comment.AuthorId != null && ctx.Users.Where(x => x.Id == comment.AuthorId).FirstOrDefault() == null)
                     throw new UserNotFoundException();

@@ -20,8 +20,8 @@ namespace CodingIdeas.Core
                 using (var conn = new SqlConnection(ctx.Database.Connection.ConnectionString))
                 {
                     string selectSql = $@"SELECT C.[{Constants.Comment_Id}], C.[{Constants.Comment_Content}], R.[{Constants.RatableEntity_UserId}], R.[{Constants.RatableEntity_PublishDate}]
-                                          FROM [{Constants.Schema}].[{Constants.Comment}] as C
-                                          LEFT JOIN [{Constants.Schema}].[{Constants.RatableEntity}] AS R ON R.[{Constants.RatableEntity_Id}] = C.[{Constants.Comment_Id}] AND C.[{Constants.Comment_PostId}] = '{postId}'
+                                          FROM [{Constants.Schema}].[{Constants.Comment}] as C, [{Constants.Schema}].[{Constants.RatableEntity}] as R
+                                          WHERE R.[{Constants.RatableEntity_Id}] = C.[{Constants.Comment_Id}] AND C.[{Constants.Comment_PostId}] = '{postId}'
                                           ORDER BY R.[{Constants.RatableEntity_PublishDate}] DESC";
                     using (var adapter = new SqlDataAdapter(selectSql, conn))
                     {
@@ -150,7 +150,7 @@ namespace CodingIdeas.Core
             }
         }
         
-        public User GetUserInfo(Guid userId)
+        public User GetUser(Guid userId)
         {
             using (var ctx = new DB.CodingIdeasEntities())
             {

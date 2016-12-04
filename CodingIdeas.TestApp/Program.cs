@@ -81,7 +81,7 @@ namespace CodingIdeas.TestApp
             Console.WriteLine($"Posts:\n{postsJson}");
 
 
-            string userJson = JsonConvert.SerializeObject(mgr.GetUserInfo(mgr.GetUserId("god@gmail.com", "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8")), Formatting.Indented);
+            string userJson = JsonConvert.SerializeObject(mgr.GetUser(mgr.GetUserId("god@gmail.com", "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8")), Formatting.Indented);
             Console.WriteLine($"User:\n{userJson}");
 
             string savedPosts = JsonConvert.SerializeObject(mgr.GetSavedPosts(userId, 1), Formatting.Indented);
