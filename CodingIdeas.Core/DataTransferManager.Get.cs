@@ -117,19 +117,27 @@ namespace CodingIdeas.Core
                         select (int)r.Rating).AsEnumerable().Aggregate((x, y) => x + y);
             }
         }
-
-        public User GetUserInfo(string login, string passwordHash)
+        
+        public User GetUserInfo(Guid userId)
         {
             using (var ctx = new DB.CodingIdeasEntities())
             {
-                var user = ctx.Users.Where(x => (x.Email == login || x.Username == login) && x.Password == passwordHash).FirstOrDefault();
+                var user = ctx.Users.Where(x => x.Id == userId).First();
                 if (user == null)
                     throw new UserNotFoundException();
-                var skills = ctx.UserSkills.ToList().Select(x => new UserSkill()
-                {
-                    ProgrammingLanguage = new ProgrammingLanguage() { Id = x.ProgrammingLanguage.Id, Name = x.ProgrammingLanguage.Name },
-                    Proficiency = (byte)x.Proficiency
-                }).ToList();
+                var skills = ctx.UserSkills
+                                .Where(x => x.UserId == userId)
+                                .ToList()
+                                .Select(x => new UserSkill()
+                                {
+                                    ProgrammingLanguage = new ProgrammingLanguage()
+                                    {
+                                        Id = x.ProgrammingLanguageId,
+                                        Name = x.ProgrammingLanguage.Name
+                                    },
+                                    Proficiency = (byte)x.Proficiency
+                                })
+                                .ToList();
                 return new User()
                 {
                     Id = user.Id,
@@ -141,6 +149,22 @@ namespace CodingIdeas.Core
                     Skills = skills,
                     Username = user.Username
                 };
+            }
+        }
+
+        public Guid GetUserId(string login, string passwordHash)
+        {
+            using (var ctx = new DB.CodingIdeasEntities())
+            {
+                var user = ctx.Users.Where(x => (x.Email == login || x.Username == login) && x.Password == passwordHash).FirstOrDefault();
+                if (user == null)
+                    throw new UserNotFoundException();
+                var skills = ctx.UserSkills.ToList().Select(x => new UserSkill()
+                {
+                    ProgrammingLanguage = new ProgrammingLanguage() { Id = x.ProgrammingLanguage.Id, Name = x.ProgrammingLanguage.Name },
+                    Proficiency = (byte)x.Proficiency
+                }).ToList();
+                return user.Id;
             }
         }
     }

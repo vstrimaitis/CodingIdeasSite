@@ -9,7 +9,8 @@ namespace CodingIdeas.Core
         IEnumerable<Post> GetPosts(int pageNumber);
         IEnumerable<Comment> GetComments(Guid postId, int pageNumber);
         int GetTotalRating(Guid entityId);
-        User GetUserInfo(string login, string passwordHash); // GetUserInfo? login = username or email
+        User GetUserInfo(Guid userId);
+        Guid GetUserId(string login, string passwordHash);
         IEnumerable<Post> GetSavedPosts(Guid userId, int pageNumber);
         sbyte GetRatingByUser(Guid userId, Guid entityId);
         IEnumerable<ProgrammingLanguage> GetProgrammingLanguages();
