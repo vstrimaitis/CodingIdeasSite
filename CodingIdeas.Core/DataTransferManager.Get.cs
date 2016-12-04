@@ -44,6 +44,25 @@ namespace CodingIdeas.Core
 
         }
 
+        public Post GetPost(Guid postId)
+        {
+            using (var ctx = new DB.CodingIdeasEntities())
+            {
+                var post = ctx.Posts.Where(x => x.Id == postId).FirstOrDefault();
+                var ratable = ctx.RatableEntities.Where(x => x.Id == postId).FirstOrDefault();
+                if (post == null)
+                    throw new PostNotFoundException();
+                return new Post()
+                {
+                    Id = post.Id,
+                    AuthorId = ratable.UserId,
+                    Content = post.Content,
+                    PublishDate = ratable.PublishDate,
+                    Title = post.Title
+                };
+            }
+        }
+
         public IEnumerable<Post> GetPosts(int pageNumber)
         {
             if (pageNumber <= 0)

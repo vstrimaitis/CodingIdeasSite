@@ -57,6 +57,7 @@ namespace CodingIdeas.Core
 
         public void AddProgrammingLanguage(ProgrammingLanguage language)
         {
+            ValidateProgrammingLanguage(language, ProgrammingLanguageProperties.All);
             var langModel = new DB.ProgrammingLanguage()
             {
                 Id = language.Id,

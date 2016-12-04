@@ -114,6 +114,7 @@
     <Compile Include="Exceptions\InvalidContentException.cs" />
     <Compile Include="Exceptions\InvalidDateOfBirthException.cs" />
     <Compile Include="Exceptions\InvalidEmailException.cs" />
+    <Compile Include="Exceptions\InvalidNameException.cs" />
     <Compile Include="Exceptions\InvalidPageNumberException.cs" />
     <Compile Include="Exceptions\InvalidPasswordHashException.cs" />
     <Compile Include="Exceptions\InvalidProficiencyException.cs" />

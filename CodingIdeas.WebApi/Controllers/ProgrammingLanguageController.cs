@@ -17,7 +17,7 @@ namespace CodingIdeas.WebApi.Controllers
             return mgr.GetProgrammingLanguages();
         }
 
-        // GET: api/ProgrammingLanguage/5
+        // GET: api/ProgrammingLanguage/abdsdf-sdfsdf-sdfsdf-sdfsdf
         [HttpGet]
         public IHttpActionResult Get(string id)
         {
@@ -37,29 +37,23 @@ namespace CodingIdeas.WebApi.Controllers
         {
             var mgr = WebApiApplication.Manager;
             var lang = value.ToObject<ProgrammingLanguage>();
-            if (string.IsNullOrWhiteSpace(lang.Name))
-                return Content(HttpStatusCode.BadRequest, "Name cannot be null");
             if (lang.Id == Guid.Empty)
                 lang.Id = Guid.NewGuid();
             mgr.AddProgrammingLanguage(lang);
             return Ok();
         }
 
-        // PUT: api/ProgrammingLanguage/5
+        // PUT: api/ProgrammingLanguage
         [HttpPut]
         public IHttpActionResult Put([FromBody]JObject value)
         {
             var mgr = WebApiApplication.Manager;
             var lang = value.ToObject<ProgrammingLanguage>();
-            if (string.IsNullOrWhiteSpace(lang.Name))
-                return Content(HttpStatusCode.BadRequest, "Name cannot be null");
-            if (lang.Id == Guid.Empty)
-                lang.Id = Guid.NewGuid();
             mgr.UpdateProgrammingLanguage(lang.Id, lang.Name);
             return Ok();
         }
 
-        // DELETE: api/ProgrammingLanguage/5
+        // DELETE: api/ProgrammingLanguage/abdsdf-sdfsdf-sdfsdf-sdfsdf
         [HttpDelete]
         public IHttpActionResult Delete(string id)
         {

@@ -9,6 +9,13 @@ namespace CodingIdeas.Core
     {
         private const string _emailPattern = @"\A(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?)\Z";
         private const string _passwordPattern = "^[a-f0-9]{64}$";
+
+        private void ValidateProgrammingLanguage(ProgrammingLanguage language, ProgrammingLanguageProperties props)
+        {
+            if (props.HasFlag(ProgrammingLanguageProperties.Name) && string.IsNullOrWhiteSpace(language.Name))
+                throw new InvalidNameException();
+        }
+
         private void ValidateComment(Comment comment, CommentProperties props)
         {
             if (comment.Content == null || props.HasFlag(CommentProperties.Content) && string.IsNullOrWhiteSpace(comment.Content))

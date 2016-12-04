@@ -32,6 +32,7 @@ namespace CodingIdeas.Core
 
         public void UpdateProgrammingLanguage(Guid oldLanguageId, string newName)
         {
+            ValidateProgrammingLanguage(new ProgrammingLanguage() { Name = newName }, ProgrammingLanguageProperties.All);
             using (var ctx = new DB.CodingIdeasEntities())
             {
                 var l = ctx.ProgrammingLanguages.Where(x => x.Id == oldLanguageId).First();

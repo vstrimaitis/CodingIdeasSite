@@ -13,6 +13,7 @@ namespace CodingIdeas.Core
         IEnumerable<Post> GetSavedPosts(Guid userId, int pageNumber);                       //
         sbyte GetRatingByUser(Guid userId, Guid entityId);                                  //
         IEnumerable<ProgrammingLanguage> GetProgrammingLanguages();                         //+
+        Post GetPost(Guid postId);                                                          //
 
         void AddRating(Guid userId, Guid entityId, sbyte rating);                           //
         void Save(Guid userId, Guid postToSaveId);                                          //
