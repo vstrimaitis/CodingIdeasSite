@@ -10,12 +10,11 @@
 namespace CodingIdeas.Core.DB
 {
     using System;
-    using System.Collections.Generic;
-    
+
     public partial class UserSkill
     {
-        public System.Guid UserId { get; set; }
-        public System.Guid ProgrammingLanguageId { get; set; }
+        public Guid UserId { get; set; }
+        public Guid ProgrammingLanguageId { get; set; }
         public short Proficiency { get; set; }
     
         public virtual ProgrammingLanguage ProgrammingLanguage { get; set; }

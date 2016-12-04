@@ -17,10 +17,10 @@ namespace CodingIdeas.Core.DB
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public ProgrammingLanguage()
         {
-            this.UserSkills = new HashSet<UserSkill>();
+            UserSkills = new HashSet<UserSkill>();
         }
     
-        public System.Guid Id { get; set; }
+        public Guid Id { get; set; }
         public string Name { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

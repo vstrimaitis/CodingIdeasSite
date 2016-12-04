@@ -10,12 +10,11 @@
 namespace CodingIdeas.Core.DB
 {
     using System;
-    using System.Collections.Generic;
-    
+
     public partial class RatedEntity
     {
-        public System.Guid EntityId { get; set; }
-        public System.Guid UserId { get; set; }
+        public Guid EntityId { get; set; }
+        public Guid UserId { get; set; }
         public short Rating { get; set; }
     
         public virtual RatableEntity RatableEntity { get; set; }

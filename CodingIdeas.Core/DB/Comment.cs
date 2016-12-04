@@ -10,12 +10,11 @@
 namespace CodingIdeas.Core.DB
 {
     using System;
-    using System.Collections.Generic;
-    
+
     public partial class Comment
     {
-        public System.Guid Id { get; set; }
-        public System.Guid PostId { get; set; }
+        public Guid Id { get; set; }
+        public Guid PostId { get; set; }
         public string Content { get; set; }
     
         public virtual RatableEntity RatableEntity { get; set; }

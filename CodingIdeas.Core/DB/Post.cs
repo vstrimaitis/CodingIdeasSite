@@ -17,11 +17,11 @@ namespace CodingIdeas.Core.DB
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Post()
         {
-            this.Comments = new HashSet<Comment>();
-            this.Users = new HashSet<User>();
+            Comments = new HashSet<Comment>();
+            Users = new HashSet<User>();
         }
     
-        public System.Guid Id { get; set; }
+        public Guid Id { get; set; }
         public string Title { get; set; }
         public string Content { get; set; }
     

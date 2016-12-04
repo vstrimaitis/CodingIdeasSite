@@ -17,19 +17,19 @@ namespace CodingIdeas.Core.DB
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public User()
         {
-            this.RatableEntity = new HashSet<RatableEntity>();
-            this.RatedEntities = new HashSet<RatedEntity>();
-            this.UserSkills = new HashSet<UserSkill>();
-            this.SavedPosts = new HashSet<Post>();
+            RatableEntity = new HashSet<RatableEntity>();
+            RatedEntities = new HashSet<RatedEntity>();
+            UserSkills = new HashSet<UserSkill>();
+            SavedPosts = new HashSet<Post>();
         }
     
-        public System.Guid Id { get; set; }
+        public Guid Id { get; set; }
         public string Email { get; set; }
         public string Username { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Password { get; set; }
-        public Nullable<System.DateTime> DOB { get; set; }
+        public DateTime? DOB { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<RatableEntity> RatableEntity { get; set; }

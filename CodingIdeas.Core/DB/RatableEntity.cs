@@ -17,12 +17,12 @@ namespace CodingIdeas.Core.DB
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public RatableEntity()
         {
-            this.RatedEntities = new HashSet<RatedEntity>();
+            RatedEntities = new HashSet<RatedEntity>();
         }
     
-        public System.Guid Id { get; set; }
-        public Nullable<System.Guid> UserId { get; set; }
-        public System.DateTime PublishDate { get; set; }
+        public Guid Id { get; set; }
+        public Guid? UserId { get; set; }
+        public DateTime PublishDate { get; set; }
     
         public virtual Comment Comment { get; set; }
         public virtual Post Post { get; set; }

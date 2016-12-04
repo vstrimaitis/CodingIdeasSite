@@ -9,10 +9,9 @@
 
 namespace CodingIdeas.Core.DB
 {
-    using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
-    
+
     public partial class CodingIdeasEntities : DbContext
     {
         public CodingIdeasEntities()
