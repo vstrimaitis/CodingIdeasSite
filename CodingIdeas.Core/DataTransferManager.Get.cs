@@ -11,8 +11,12 @@ namespace CodingIdeas.Core
     {
         public IEnumerable<Comment> GetComments(Guid postId, int pageNumber)
         {
+            if (pageNumber <= 0)
+                throw new InvalidPageNumberException();
             using (var ctx = new DB.CodingIdeasEntities())
             {
+                if (ctx.Posts.Where(x => x.Id == postId).FirstOrDefault() == null)
+                    throw new PostNotFoundException();
                 using (var conn = new SqlConnection(ctx.Database.Connection.ConnectionString))
                 {
                     string selectSql = $@"SELECT C.[{Constants.Comment_Id}], C.[{Constants.Comment_Content}], R.[{Constants.RatableEntity_UserId}], R.[{Constants.RatableEntity_PublishDate}]
@@ -29,7 +33,7 @@ namespace CodingIdeas.Core
                                                 Id = Guid.Parse(x[0].ToString()),
                                                 PostId = postId,
                                                 Content = x[1].ToString(),
-                                                AuthorId = Guid.Parse(x[2].ToString()),
+                                                AuthorId = x[2].ToString() == "" ? (Guid?)null : Guid.Parse(x[2].ToString()),
                                                 PublishDate = DateTime.Parse(x[3].ToString())
                                             });
                         foreach (var c in comments)
@@ -42,6 +46,8 @@ namespace CodingIdeas.Core
 
         public IEnumerable<Post> GetPosts(int pageNumber)
         {
+            if (pageNumber <= 0)
+                throw new InvalidPageNumberException();
             using (var ctx = new DB.CodingIdeasEntities())
             {
                 var posts = (from p in ctx.Posts
@@ -85,11 +91,16 @@ namespace CodingIdeas.Core
 
         public IEnumerable<Post> GetSavedPosts(Guid userId, int pageNumber)
         {
+            if (pageNumber <= 0)
+                throw new InvalidPageNumberException();
             using (var ctx = new DB.CodingIdeasEntities())
             {
-                var saved = ctx.Users
+                var user = ctx.Users
                             .Where(x => x.Id == userId)
-                            .FirstOrDefault()
+                            .FirstOrDefault();
+                if (user == null)
+                    throw new UserNotFoundException();
+                var saved = user
                             .SavedPosts
                             .Skip((pageNumber - 1) * SavedPostsPerPage)
                             .Take(SavedPostsPerPage)
@@ -122,7 +133,7 @@ namespace CodingIdeas.Core
         {
             using (var ctx = new DB.CodingIdeasEntities())
             {
-                var user = ctx.Users.Where(x => x.Id == userId).First();
+                var user = ctx.Users.Where(x => x.Id == userId).FirstOrDefault();
                 if (user == null)
                     throw new UserNotFoundException();
                 var skills = ctx.UserSkills

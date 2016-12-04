@@ -108,6 +108,8 @@
     <Compile Include="DB\UserSkill.cs">
       <DependentUpon>CodingIdeasDataModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Exceptions\InvalidPageNumberException.cs" />
+    <Compile Include="Exceptions\PostNotFoundException.cs" />
     <Compile Include="Exceptions\UserNotFoundException.cs" />
     <Compile Include="IDataTransferManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
