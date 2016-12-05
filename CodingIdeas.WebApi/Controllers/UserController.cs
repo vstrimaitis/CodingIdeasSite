@@ -28,6 +28,14 @@ namespace CodingIdeas.WebApi.Controllers
             return Ok(id);
         }
 
+        [HttpGet]
+        [Route("api/User/MostActivePosters/{howMany}")]
+        public IHttpActionResult GetMostActivePosters(int howMany)
+        {
+            var mgr = WebApiApplication.Manager;
+            return Ok(mgr.GetMostActivePosters(howMany));
+        }
+
         [HttpPost]
         [Route("api/User")]
         public IHttpActionResult Post([FromBody]JObject value)

@@ -200,5 +200,21 @@ namespace CodingIdeas.Core
                 return user.Id;
             }
         }
+
+        public IEnumerable<dynamic> GetMostActivePosters(int howMany)
+        {
+            using (var ctx = new DB.CodingIdeasEntities())
+            {
+                var posters = ctx.Posts
+                                 .Include(x => x.RatableEntity)
+                                 .GroupBy(x => x.RatableEntity.UserId)
+                                 .Where(x => x.Key != null)
+                                 .OrderByDescending(x => x.Count())
+                                 .Take(howMany)
+                                 .Select(x => new { UserId = x.Key.Value, NumberOfPosts =  x.Count() });
+                foreach (var p in posters)
+                    yield return p;
+            }
+        }
     }
 }

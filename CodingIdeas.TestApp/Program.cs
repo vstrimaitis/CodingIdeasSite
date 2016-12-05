@@ -64,8 +64,6 @@ namespace CodingIdeas.TestApp
                 Guid.Parse("DEF453F9-025B-4E97-A72D-FE6B13B29934"),
             };
 
-            mgr.AddUser(new User() { Email = "A@A.A" });
-
             string allLangsJson = JsonConvert.SerializeObject(mgr.GetProgrammingLanguages().ToList(), Formatting.Indented);
             Console.WriteLine($"Programming languages:\n{allLangsJson}");
             
@@ -86,8 +84,10 @@ namespace CodingIdeas.TestApp
 
             string savedPosts = JsonConvert.SerializeObject(mgr.GetSavedPosts(userId, 1), Formatting.Indented);
             Console.WriteLine($"Saved posts:\n{savedPosts}");
-            
 
+            var posters = mgr.GetMostActivePosters(10);
+            string topPosters = JsonConvert.SerializeObject(posters, Formatting.Indented);
+            Console.WriteLine(topPosters);
             /*string json = JsonConvert.SerializeObject(langTable, Formatting.Indented);
             Console.WriteLine(json);
 

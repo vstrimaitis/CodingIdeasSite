@@ -14,6 +14,7 @@ namespace CodingIdeas.Core
         sbyte GetRatingByUser(Guid userId, Guid entityId);                                  //+
         IEnumerable<ProgrammingLanguage> GetProgrammingLanguages();                         //+
         Post GetPost(Guid postId);                                                          //+
+        IEnumerable<dynamic> GetMostActivePosters(int howMany);                             //+
 
         void AddRating(Guid userId, Guid entityId, sbyte rating);                           //+
         void Save(Guid userId, Guid postToSaveId);                                          //+
