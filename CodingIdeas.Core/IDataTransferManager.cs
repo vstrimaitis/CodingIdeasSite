@@ -21,14 +21,14 @@ namespace CodingIdeas.Core
         void AddPost(Post post);                                                            //+
         void AddComment(Comment comment);                                                   //+
         void AddProgrammingLanguage(ProgrammingLanguage language);                          //+
-        void AddSkill(Guid userId, Guid languageId, byte proficiency);                      //
+        void AddSkill(Guid userId, Guid languageId, byte proficiency);                      //+
         
         void UpdatePost(Guid oldPostId, Post @new, PostProperties propertiesToChange);      //+
         void UpdateComment(Guid oldCommentId, string newContent);                           //+
         void UpdateUser(Guid oldUserId, User @new, UserProperties propertiesToChange);      //+
         void UpdateRating(Guid userId, Guid entityId, sbyte newRating);                     //+
         void UpdateProgrammingLanguage(Guid oldLanguageId, string newName);                 //+
-        void UpdateSkill(Guid userId, Guid languageId, byte proficiency);                   //
+        void UpdateSkill(Guid userId, Guid languageId, byte proficiency);                   //+
 
         void RemovePost(Guid postId);                                                       //+
         void RemoveComment(Guid commentId);                                                 //+
@@ -36,6 +36,6 @@ namespace CodingIdeas.Core
         void RemoveProgrammingLanguage(Guid languageId);                                    //+
         void Unsave(Guid userId, Guid postId);                                              //+
         void RemoveRating(Guid userId, Guid entityId);                                      //+
-        void RemoveSkill(Guid userId, Guid languageId);                                     //
+        void RemoveSkill(Guid userId, Guid languageId);                                     //+
     }
 }
