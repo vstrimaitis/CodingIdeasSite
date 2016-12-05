@@ -66,8 +66,8 @@ namespace CodingIdeas.Core
                     r.FirstName = @new.FirstName;
                 if (propertiesToChange.HasFlag(UserProperties.LastName))
                     r.LastName = @new.LastName;
-                if (propertiesToChange.HasFlag(UserProperties.PasswordHash))
-                    r.Password = @new.PasswordHash;
+                if (propertiesToChange.HasFlag(UserProperties.Password))
+                    r.Password = @new.Password;
                 if (propertiesToChange.HasFlag(UserProperties.Username))
                     r.Username = @new.Username;
                 ctx.SaveChanges();

@@ -107,7 +107,7 @@ namespace CodingIdeas.Core
                     Email = user.Email,
                     FirstName = user.FirstName,
                     LastName = user.LastName,
-                    Password = user.PasswordHash,
+                    Password = user.Password,
                     Username = user.Username
                 });
                 ctx.SaveChanges();

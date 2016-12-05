@@ -160,7 +160,7 @@ namespace CodingIdeas.Core
         {
             using (var ctx = new DB.CodingIdeasEntities())
             {
-                var user = ctx.Users.Where(x => x.Id == userId).FirstOrDefault();
+                var user = ctx.Users.Include(x => x.UserSkills.Select(y => y.ProgrammingLanguage)).Where(x => x.Id == userId).FirstOrDefault();
                 if (user == null)
                     throw new UserNotFoundException();
                 var skills = ctx.UserSkills
@@ -183,7 +183,7 @@ namespace CodingIdeas.Core
                     Email = user.Email,
                     FirstName = user.FirstName,
                     LastName = user.LastName,
-                    PasswordHash = user.Password,
+                    Password = user.Password,
                     Skills = skills,
                     Username = user.Username
                 };
@@ -197,11 +197,6 @@ namespace CodingIdeas.Core
                 var user = ctx.Users.Where(x => (x.Email == login || x.Username == login) && x.Password == passwordHash).FirstOrDefault();
                 if (user == null)
                     throw new UserNotFoundException();
-                var skills = ctx.UserSkills.ToList().Select(x => new UserSkill()
-                {
-                    ProgrammingLanguage = new ProgrammingLanguage() { Id = x.ProgrammingLanguage.Id, Name = x.ProgrammingLanguage.Name },
-                    Proficiency = (byte)x.Proficiency
-                }).ToList();
                 return user.Id;
             }
         }

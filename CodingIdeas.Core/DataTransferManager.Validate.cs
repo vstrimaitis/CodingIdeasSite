@@ -77,9 +77,9 @@ namespace CodingIdeas.Core
 
         private void ValidateUser(User user, UserProperties props)
         {
-            if (user.Email == null || props.HasFlag(UserProperties.Email) && !Regex.IsMatch(user.Email, _emailPattern, RegexOptions.IgnoreCase))
+            if (props.HasFlag(UserProperties.Email) && (user.Email == null || !Regex.IsMatch(user.Email, _emailPattern, RegexOptions.IgnoreCase)))
                 throw new InvalidEmailException();
-            if (user.PasswordHash == null || props.HasFlag(UserProperties.PasswordHash) && !Regex.IsMatch(user.PasswordHash, _passwordPattern, RegexOptions.IgnoreCase))
+            if (props.HasFlag(UserProperties.Password) && (user.Password == null || !Regex.IsMatch(user.Password, _passwordPattern, RegexOptions.IgnoreCase)))
                 throw new InvalidPasswordHashException();
             if (user.DateOfBirth != null && props.HasFlag(UserProperties.DateOfBirth) && user.DateOfBirth >= DateTime.Now)
                 throw new InvalidDateOfBirthException();

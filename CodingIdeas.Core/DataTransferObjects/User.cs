@@ -13,7 +13,7 @@ namespace CodingIdeas.Core
         FirstName = 8,
         LastName = 16,
         DateOfBirth = 32,
-        PasswordHash = 64,
+        Password = 64,
         All = 127
     }
 
@@ -25,7 +25,7 @@ namespace CodingIdeas.Core
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public DateTime? DateOfBirth { get; set; }
-        public string PasswordHash { get; set; }
+        public string Password { get; set; }
         public IList<UserSkill> Skills { get; set; }
 
         public User(string email, string username, string firstName, string lastName, DateTime? dob, string passwordHash, IList<UserSkill> skills)
@@ -36,7 +36,7 @@ namespace CodingIdeas.Core
             FirstName = firstName;
             LastName = lastName;
             DateOfBirth = dob;
-            PasswordHash = passwordHash;
+            Password = passwordHash;
             Skills = skills;
         }
     }
