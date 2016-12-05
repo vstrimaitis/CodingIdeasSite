@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CodingIdeas.Core.Exceptions;
+using System;
 using System.Linq;
 
 namespace CodingIdeas.Core
@@ -100,6 +101,8 @@ namespace CodingIdeas.Core
             ValidateUser(user, UserProperties.All);
             using (var ctx = new DB.CodingIdeasEntities())
             {
+                if (ctx.Users.Where(x => x.Username == user.Username && x.Password == user.Password).Count() != 0)
+                    throw new InvalidCredentialsException();
                 ctx.Users.Add(new DB.User()
                 {
                     Id = user.Id,
@@ -119,8 +122,13 @@ namespace CodingIdeas.Core
             ValidateSavePost(userId, postToSaveId);
             using (var ctx = new DB.CodingIdeasEntities())
             {
-                var post = ctx.Posts.Where(x => x.Id == postToSaveId).First();
-                ctx.Users.Where(x => x.Id == userId).First().SavedPosts.Add(post);
+                var post = ctx.Posts.Where(x => x.Id == postToSaveId).FirstOrDefault();
+                var user = ctx.Users.Where(x => x.Id == userId).FirstOrDefault();
+                if (user == null)
+                    throw new UserNotFoundException();
+                if (post == null)
+                    throw new SavedPostNotFoundException();
+                user.SavedPosts.Add(post);
                 ctx.SaveChanges();
             }
         }

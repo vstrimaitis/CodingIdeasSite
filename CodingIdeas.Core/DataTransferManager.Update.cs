@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using System;
+using CodingIdeas.Core.Exceptions;
 
 namespace CodingIdeas.Core
 {
@@ -10,7 +11,9 @@ namespace CodingIdeas.Core
             ValidateComment(new Comment() { Content = newContent }, CommentProperties.Content);
             using (var ctx = new DB.CodingIdeasEntities())
             {
-                var c = ctx.Comments.Where(x => x.Id == oldCommentId).First();
+                var c = ctx.Comments.Where(x => x.Id == oldCommentId).FirstOrDefault();
+                if (c == null)
+                    throw new CommentNotFoundException();
                 c.Content = newContent;
                 ctx.SaveChanges();
             }
@@ -21,7 +24,9 @@ namespace CodingIdeas.Core
             ValidatePost(@new, propertiesToChange);
             using (var ctx = new DB.CodingIdeasEntities())
             {
-                var p = ctx.Posts.Where(x => x.Id == oldPostId).First();
+                var p = ctx.Posts.Where(x => x.Id == oldPostId).FirstOrDefault();
+                if (p == null)
+                    throw new PostNotFoundException();
                 if(propertiesToChange.HasFlag(PostProperties.Content))
                     p.Content = @new.Content;
                 if (propertiesToChange.HasFlag(PostProperties.Title))
@@ -35,7 +40,9 @@ namespace CodingIdeas.Core
             ValidateProgrammingLanguage(new ProgrammingLanguage() { Name = newName }, ProgrammingLanguageProperties.All);
             using (var ctx = new DB.CodingIdeasEntities())
             {
-                var l = ctx.ProgrammingLanguages.Where(x => x.Id == oldLanguageId).First();
+                var l = ctx.ProgrammingLanguages.Where(x => x.Id == oldLanguageId).FirstOrDefault();
+                if (l == null)
+                    throw new ProgrammingLanguageNotFoundException();
                 l.Name = newName;
                 ctx.SaveChanges();
             }
@@ -46,7 +53,9 @@ namespace CodingIdeas.Core
             ValidateRating(userId, entityId, newRating);
             using (var ctx = new DB.CodingIdeasEntities())
             {
-                var r = ctx.RatedEntities.Where(x => x.UserId == userId && x.EntityId == entityId).First();
+                var r = ctx.RatedEntities.Where(x => x.UserId == userId && x.EntityId == entityId).FirstOrDefault();
+                if (r == null)
+                    throw new RatingNotFoundException();
                 r.Rating = newRating;
                 ctx.SaveChanges();
             }
@@ -57,7 +66,11 @@ namespace CodingIdeas.Core
             ValidateUser(@new, propertiesToChange);
             using (var ctx = new DB.CodingIdeasEntities())
             {
-                var r = ctx.Users.Where(x => x.Id == oldUserId).First();
+                if (ctx.Users.Where(x => x.Username == @new.Username && x.Password == @new.Password).Count() != 0)
+                    throw new InvalidCredentialsException();
+                var r = ctx.Users.Where(x => x.Id == oldUserId).FirstOrDefault();
+                if (r == null)
+                    throw new UserNotFoundException();
                 if(propertiesToChange.HasFlag(UserProperties.DateOfBirth))
                     r.DOB = @new.DateOfBirth;
                 if (propertiesToChange.HasFlag(UserProperties.Email))
@@ -79,7 +92,9 @@ namespace CodingIdeas.Core
             ValidateSkill(userId, languageId, proficiency);
             using (var ctx = new DB.CodingIdeasEntities())
             {
-                var s = ctx.UserSkills.Where(x => x.UserId == userId && x.ProgrammingLanguageId == languageId).First();
+                var s = ctx.UserSkills.Where(x => x.UserId == userId && x.ProgrammingLanguageId == languageId).FirstOrDefault();
+                if (s == null)
+                    throw new UserSkillNotFoundException();
                 s.Proficiency = proficiency;
                 ctx.SaveChanges();
             }

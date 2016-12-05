@@ -111,6 +111,7 @@
     <Compile Include="DB\UserSkill.cs">
       <DependentUpon>CodingIdeasDataModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Exceptions\CommentNotFoundException.cs" />
     <Compile Include="Exceptions\InvalidContentException.cs" />
     <Compile Include="Exceptions\InvalidDateOfBirthException.cs" />
     <Compile Include="Exceptions\InvalidEmailException.cs" />
@@ -121,6 +122,7 @@
     <Compile Include="Exceptions\InvalidPublishDateException.cs" />
     <Compile Include="Exceptions\InvalidRatingException.cs" />
     <Compile Include="Exceptions\InvalidTitleException.cs" />
+    <Compile Include="Exceptions\InvalidCredentialsException.cs" />
     <Compile Include="Exceptions\PostNotFoundException.cs" />
     <Compile Include="Exceptions\ProgrammingLanguageNotFoundException.cs" />
     <Compile Include="Exceptions\RatableEntityNotFoundException.cs" />
