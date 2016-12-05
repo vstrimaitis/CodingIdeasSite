@@ -1,7 +1,6 @@
 ﻿using CodingIdeas.Core;
 using Newtonsoft.Json.Linq;
 using System;
-using System.Net;
 using System.Web.Http;
 
 namespace CodingIdeas.WebApi.Controllers
