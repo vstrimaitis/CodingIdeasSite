@@ -101,10 +101,12 @@ namespace CodingIdeas.Core
         {
             using (var ctx = new DB.CodingIdeasEntities())
             {
-                return ctx.RatedEntities
-                          .Where(x => x.UserId == userId && x.EntityId == entityId)
-                          .Select(x => (sbyte)x.Rating)
-                          .FirstOrDefault();
+                var rating = ctx.RatedEntities
+                                .Where(x => x.UserId == userId && x.EntityId == entityId)
+                                .FirstOrDefault();
+                if (rating == null)
+                    return 0;
+                return (sbyte)rating.Rating;
             }
         }
 
@@ -142,11 +144,12 @@ namespace CodingIdeas.Core
 
             using (var ctx = new DB.CodingIdeasEntities())
             {
-                return (from r in ctx.RatedEntities
-                        where r.EntityId == entityId
-                        select (int)r.Rating)
-                        .AsEnumerable()
-                        .Aggregate((x, y) => x + y);
+                var allRatings = from r in ctx.RatedEntities
+                                 where r.EntityId == entityId
+                                 select (int)r.Rating;
+                if (allRatings.Count() == 0)
+                    return 0;
+                return allRatings.AsEnumerable().Aggregate((x, y) => x + y);
             }
         }
         
