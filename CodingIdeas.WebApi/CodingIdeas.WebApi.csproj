@@ -133,6 +133,7 @@
     <Compile Include="Controllers\ProgrammingLanguageController.cs" />
     <Compile Include="Controllers\RatingController.cs" />
     <Compile Include="Controllers\SavedController.cs" />
+    <Compile Include="Controllers\SkillController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
