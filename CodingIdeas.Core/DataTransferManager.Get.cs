@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.Entity;
 using System.Data.SqlClient;
 using System.Linq;
 
@@ -117,10 +118,12 @@ namespace CodingIdeas.Core
             using (var ctx = new DB.CodingIdeasEntities())
             {
                 var user = ctx.Users
-                            .Where(x => x.Id == userId)
-                            .FirstOrDefault();
+                              .Include(x => x.SavedPosts.Select(y => y.RatableEntity))
+                              .Where(x => x.Id == userId)
+                              .FirstOrDefault();
                 if (user == null)
                     throw new UserNotFoundException();
+
                 var saved = user
                             .SavedPosts
                             .Skip((pageNumber - 1) * SavedPostsPerPage)

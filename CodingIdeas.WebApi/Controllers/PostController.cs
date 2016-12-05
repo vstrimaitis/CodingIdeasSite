@@ -2,38 +2,31 @@
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
-using System.Net;
 using System.Web.Http;
 
 namespace CodingIdeas.WebApi.Controllers
 {
     public class PostController : ApiController
     {
-        // GET: api/Post/1
         [HttpGet]
-        public IEnumerable<Post> Get(int pageNumber)
+        [Route("api/Post/InPage/{pageNumber}")]
+        public IHttpActionResult Get(int pageNumber)
         {
             var mgr = WebApiApplication.Manager;
-            return mgr.GetPosts(pageNumber);
+            return Ok(mgr.GetPosts(pageNumber));
         }
 
-        // GET: api/Post/abdsdf-sdfsdf-sdfsdf-sdfsdf
         [HttpGet]
-        public IHttpActionResult Get(string id)
+        [Route("api/Post/{id}")]
+        public IHttpActionResult Get(Guid id)
         {
-            int intId;
-            if (int.TryParse(id, out intId))
-                return Ok(Get(intId));
             var mgr = WebApiApplication.Manager;
-            Guid guid;
-            if (!Guid.TryParse(id, out guid))
-                return Content(HttpStatusCode.BadRequest, "Invalid GUID format");
-            var post = mgr.GetPost(guid);
+            var post = mgr.GetPost(id);
             return Ok(post);
         }
-
-        // POST: api/Post
+        
         [HttpPost]
+        [Route("api/Post")]
         public IHttpActionResult Post([FromBody]JObject value)
         {
             var mgr = WebApiApplication.Manager;
@@ -43,9 +36,9 @@ namespace CodingIdeas.WebApi.Controllers
             mgr.AddPost(post);
             return Ok();
         }
-
-        // PUT: api/Post
+        
         [HttpPut]
+        [Route("api/Post")]
         public IHttpActionResult Put([FromBody]JObject value)
         {
             var mgr = WebApiApplication.Manager;
@@ -53,16 +46,17 @@ namespace CodingIdeas.WebApi.Controllers
             mgr.UpdatePost(post.Id, post, PostProperties.All);
             return Ok();
         }
-
-        // DELETE: api/Post/abdsdf-sdfsdf-sdfsdf-sdfsdf
+        
         [HttpDelete]
-        public IHttpActionResult Delete(string id)
+        [Route("api/Post/{id}")]
+        public IHttpActionResult Delete(Guid id)
         {
             var mgr = WebApiApplication.Manager;
-            Guid guid;
+            /*Guid guid;
             if (!Guid.TryParse(id, out guid))
                 return Content(HttpStatusCode.BadRequest, "Invalid GUID format");
-            mgr.RemovePost(guid);
+            mgr.RemovePost(guid);*/
+            mgr.RemovePost(id);
             return Ok();
         }
     }

@@ -8,7 +8,6 @@ namespace CodingIdeas.WebApi.Controllers
 {
     public class RatingController : ApiController
     {
-        // GET: api/Rating/{entityId}
         [HttpGet]
         [Route("api/Rating/{entityId}")]
         public IHttpActionResult Get(string entityId)
@@ -19,8 +18,7 @@ namespace CodingIdeas.WebApi.Controllers
             var mgr = WebApiApplication.Manager;
             return Ok(mgr.GetTotalRating(guid));
         }
-
-        // GET: api/Rating/{entityId}/{userId}
+        
         [HttpGet]
         [Route("api/Rating/{entityId}/{userId}")]
         public IHttpActionResult Get(string entityId, string userId)
@@ -31,9 +29,9 @@ namespace CodingIdeas.WebApi.Controllers
             var mgr = WebApiApplication.Manager;
             return Ok(mgr.GetRatingByUser(userGuid, entityGuid));
         }
-
-        // POST: api/Rating
+        
         [HttpPost]
+        [Route("api/Rating")]
         public IHttpActionResult Post([FromBody]JObject value)
         {
             var typeExample = new { EntityId = Guid.Empty, UserId = Guid.Empty, Rating = (sbyte)0 };
@@ -42,9 +40,9 @@ namespace CodingIdeas.WebApi.Controllers
             mgr.AddRating(rating.UserId, rating.EntityId, rating.Rating);
             return Ok();
         }
-
-        // PUT: api/Rating
+        
         [HttpPut]
+        [Route("api/Rating")]
         public IHttpActionResult Put([FromBody]JObject value)
         {
             var typeExample = new { EntityId = Guid.Empty, UserId = Guid.Empty, Rating = (sbyte)0 };
@@ -53,8 +51,7 @@ namespace CodingIdeas.WebApi.Controllers
             mgr.UpdateRating(rating.UserId, rating.EntityId, rating.Rating);
             return Ok();
         }
-
-        // DELETE: api/Rating/{entityId}/{userId}
+        
         [HttpDelete]
         [Route("api/Rating/{entityId}/{userId}")]
         public IHttpActionResult Delete(string entityId, string userId)

@@ -1,6 +1,7 @@
 ﻿using CodingIdeas.Core.Exceptions;
 using System;
 using System.Linq;
+using System.Data.Entity;
 
 namespace CodingIdeas.Core
 {
@@ -88,7 +89,7 @@ namespace CodingIdeas.Core
         {
             using (var ctx = new DB.CodingIdeasEntities())
             {
-                var user = ctx.Users.Where(x => x.Id == userId).FirstOrDefault();
+                var user = ctx.Users.Include(x => x.SavedPosts).Where(x => x.Id == userId).FirstOrDefault();
                 if (user == null)
                     throw new UserNotFoundException();
                 var savedPost = user.SavedPosts.Where(x => x.Id == postId).FirstOrDefault();
