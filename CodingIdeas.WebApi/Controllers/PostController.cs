@@ -34,7 +34,7 @@ namespace CodingIdeas.WebApi.Controllers
             if (post.Id == Guid.Empty)
                 post.Id = Guid.NewGuid();
             mgr.AddPost(post);
-            return Ok();
+            return Ok(new { Id = post.Id });
         }
         
         [HttpPut]

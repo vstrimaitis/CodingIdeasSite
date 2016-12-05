@@ -38,7 +38,7 @@ namespace CodingIdeas.WebApi.Controllers
             if (lang.Id == Guid.Empty)
                 lang.Id = Guid.NewGuid();
             mgr.AddProgrammingLanguage(lang);
-            return Ok();
+            return Ok(new { Id = lang.Id });
         }
         
         [HttpPut]

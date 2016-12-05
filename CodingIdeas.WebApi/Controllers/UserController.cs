@@ -48,7 +48,7 @@ namespace CodingIdeas.WebApi.Controllers
                 return Content(System.Net.HttpStatusCode.Forbidden, "Invalid password");
             user.Password = Hasher.ComputeSha256(user.Password);
             mgr.AddUser(user);
-            return Ok();
+            return Ok(new { Id = user.Id });
         }
 
         [HttpPut]

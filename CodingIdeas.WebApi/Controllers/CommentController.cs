@@ -24,7 +24,7 @@ namespace CodingIdeas.WebApi.Controllers
             if (comment.Id == Guid.Empty)
                 comment.Id = Guid.NewGuid();
             mgr.AddComment(comment);
-            return Ok();
+            return Ok(new { Id = comment.Id });
         }
         
         [HttpPut]
