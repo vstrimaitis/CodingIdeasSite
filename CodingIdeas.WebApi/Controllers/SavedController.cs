@@ -7,7 +7,6 @@ namespace CodingIdeas.WebApi.Controllers
 {
     public class SavedController : ApiController
     {
-        // GET: api/Saved/{userId}/{pageNumber}
         [HttpGet]
         [Route("api/Saved/{userId}/{pageNumber}")]
         public IHttpActionResult Get(Guid userId, int pageNumber)
@@ -15,8 +14,7 @@ namespace CodingIdeas.WebApi.Controllers
             var mgr = WebApiApplication.Manager;
             return Ok(mgr.GetSavedPosts(userId, pageNumber));
         }
-
-        // POST: api/Saved
+        
         [HttpPost]
         [Route("api/Saved")]
         public IHttpActionResult Post([FromBody]JObject value)
@@ -27,8 +25,7 @@ namespace CodingIdeas.WebApi.Controllers
             mgr.Save(saved.UserId, saved.PostId);
             return Ok();
         }
-
-        // DELETE: api/Saved
+        
         [HttpDelete]
         [Route("api/Saved/{userId}/{postId}")]
         public IHttpActionResult Delete(Guid userId, Guid postId)

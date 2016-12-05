@@ -10,13 +10,13 @@ namespace CodingIdeas.Core
         int GetTotalRating(Guid entityId);                                                  //+
         User GetUser(Guid userId);                                                          //
         Guid GetUserId(string login, string passwordHash);                                  //
-        IEnumerable<Post> GetSavedPosts(Guid userId, int pageNumber);                       //
+        IEnumerable<Post> GetSavedPosts(Guid userId, int pageNumber);                       //+
         sbyte GetRatingByUser(Guid userId, Guid entityId);                                  //+
         IEnumerable<ProgrammingLanguage> GetProgrammingLanguages();                         //+
         Post GetPost(Guid postId);                                                          //+
 
         void AddRating(Guid userId, Guid entityId, sbyte rating);                           //+
-        void Save(Guid userId, Guid postToSaveId);                                          //
+        void Save(Guid userId, Guid postToSaveId);                                          //+
         void AddUser(User user);                                                            //
         void AddPost(Post post);                                                            //+
         void AddComment(Comment comment);                                                   //+
@@ -34,7 +34,7 @@ namespace CodingIdeas.Core
         void RemoveComment(Guid commentId);                                                 //+
         void RemoveUser(Guid userId);                                                       //
         void RemoveProgrammingLanguage(Guid languageId);                                    //+
-        void Unsave(Guid userId, Guid postId);                                              //
+        void Unsave(Guid userId, Guid postId);                                              //+
         void RemoveRating(Guid userId, Guid entityId);                                      //+
         void RemoveSkill(Guid userId, Guid languageId);                                     //
     }
