@@ -85,10 +85,6 @@ namespace CodingIdeas.Core
 
         public IEnumerable<ProgrammingLanguage> GetProgrammingLanguages()
         {
-            var table = new DataTable();
-            table.Columns.Add(nameof(ProgrammingLanguage.Id), typeof(Guid));
-            table.Columns.Add(nameof(ProgrammingLanguage.Name), typeof(string));
-
             using (var ctx = new DB.CodingIdeasEntities())
             {
                 foreach (var lang in ctx.ProgrammingLanguages)
