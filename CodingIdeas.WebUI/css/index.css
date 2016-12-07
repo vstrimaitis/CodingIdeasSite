@@ -1,0 +1,52 @@
+/*!
+ * Start Bootstrap - Blog Home (http://startbootstrap.com/)
+ * Copyright 2013-2016 Start Bootstrap
+ * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap/blob/gh-pages/LICENSE)
+ */
+
+body {
+    padding-top: 70px; /* Required padding for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
+}
+
+footer {
+    margin: 50px 0;
+}
+
+.disabled{
+    color: grey;
+}
+
+.disabled:hover{
+    cursor: not-allowed;
+}
+
+td,th{
+    text-align: center;
+}
+
+#newSkillButton:hover{
+    cursor:cell;
+}
+
+.unselectable{
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.removeSkillRow{
+    cursor: pointer;
+}
+
+.loginPaneArea{
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+.loginPaneArea  label{
+    color: white;
+}
