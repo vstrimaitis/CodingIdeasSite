@@ -7,26 +7,31 @@ namespace CodingIdeas.Core
 {
     public partial class DataTransferManager
     {
-        private void RemoveRatableEntity(Guid entityId)
+
+        public void RemoveComment(Guid commentId)
         {
             using (var ctx = new DB.CodingIdeasEntities())
             {
-                var entity = ctx.RatableEntities.Where(x => x.Id == entityId).FirstOrDefault();
+                var entity = ctx.RatableEntities.Where(x => x.Id == commentId).FirstOrDefault();
                 if (entity == null)
-                    throw new RatableEntityNotFoundException();
+                    throw new CommentNotFoundException();
                 ctx.RatableEntities.Remove(entity);
                 ctx.SaveChanges();
             }
         }
 
-        public void RemoveComment(Guid commentId)
-        {
-            RemoveRatableEntity(commentId);
-        }
-
         public void RemovePost(Guid postId)
         {
-            RemoveRatableEntity(postId);
+            using (var ctx = new DB.CodingIdeasEntities())
+            {
+                var post = ctx.Posts.Include(x => x.Comments).Where(x => x.Id == postId).FirstOrDefault();
+                if (post == null)
+                    throw new PostNotFoundException();
+                foreach (var c in post.Comments.ToList())
+                    ctx.Comments.Remove(c);
+                ctx.Posts.Remove(post);
+                ctx.SaveChanges();
+            }
         }
 
         public void RemoveProgrammingLanguage(Guid languageId)
