@@ -20,9 +20,9 @@ namespace CodingIdeas.Core
                     throw new PostNotFoundException();
                 using (var conn = new SqlConnection(ctx.Database.Connection.ConnectionString))
                 {
-                    string selectSql = $@"SELECT C.[{Constants.Comment_Id}], C.[{Constants.Comment_Content}], R.[{Constants.RatableEntity_UserId}], R.[{Constants.RatableEntity_PublishDate}]
-                                          FROM [{Constants.Schema}].[{Constants.Comment}] as C, [{Constants.Schema}].[{Constants.RatableEntity}] as R
-                                          WHERE R.[{Constants.RatableEntity_Id}] = C.[{Constants.Comment_Id}] AND C.[{Constants.Comment_PostId}] = '{postId}'
+                    string selectSql = $@"SELECT C.[{Constants.Comment_Id}], C.[{Constants.Comment_Content}], R.[{Constants.RatableEntity_UserId}], U.[{Constants.User_Username}], R.[{Constants.RatableEntity_PublishDate}]
+                                          FROM [{Constants.Schema}].[{Constants.Comment}] as C, [{Constants.Schema}].[{Constants.RatableEntity}] as R, [{Constants.Schema}].[{Constants.User}] as U
+                                          WHERE R.[{Constants.RatableEntity_Id}] = C.[{Constants.Comment_Id}] AND C.[{Constants.Comment_PostId}] = '{postId}' AND R.[{Constants.RatableEntity_UserId}] = U.[{Constants.User_Id}]
                                           ORDER BY R.[{Constants.RatableEntity_PublishDate}] DESC";
                     using (var adapter = new SqlDataAdapter(selectSql, conn))
                     {
@@ -35,7 +35,8 @@ namespace CodingIdeas.Core
                                                 PostId = postId,
                                                 Content = x[1].ToString(),
                                                 AuthorId = x[2].ToString() == "" ? (Guid?)null : Guid.Parse(x[2].ToString()),
-                                                PublishDate = DateTime.Parse(x[3].ToString())
+                                                PublishDate = DateTime.Parse(x[4].ToString()),
+                                                AuthorUsername = x[3].ToString()
                                             });
                         foreach (var c in comments)
                             yield return c;
@@ -49,17 +50,17 @@ namespace CodingIdeas.Core
         {
             using (var ctx = new DB.CodingIdeasEntities())
             {
-                var post = ctx.Posts.Where(x => x.Id == postId).FirstOrDefault();
-                var ratable = ctx.RatableEntities.Where(x => x.Id == postId).FirstOrDefault();
+                var post = ctx.Posts.Include(x => x.RatableEntity).Include(x => x.RatableEntity.User).Where(x => x.Id == postId).FirstOrDefault();
                 if (post == null)
                     throw new PostNotFoundException();
                 return new Post()
                 {
                     Id = post.Id,
-                    AuthorId = ratable.UserId,
+                    AuthorId = post.RatableEntity.UserId,
                     Content = post.Content,
-                    PublishDate = ratable.PublishDate,
-                    Title = post.Title
+                    PublishDate = post.RatableEntity.PublishDate,
+                    Title = post.Title,
+                    AuthorUsername = post.RatableEntity.User.Username
                 };
             }
         }
@@ -72,12 +73,13 @@ namespace CodingIdeas.Core
             {
                 var posts = (from p in ctx.Posts
                              join r in ctx.RatableEntities on p.Id equals r.Id
-                             orderby r.PublishDate
-                             select new { AuthorId = r.UserId, Id = p.Id, Content = p.Content, PublishDate = r.PublishDate, Title = p.Title })
+                             join u in ctx.Users on r.UserId equals u.Id
+                             orderby r.PublishDate descending
+                             select new { AuthorId = r.UserId, Id = p.Id, Content = p.Content, PublishDate = r.PublishDate, Title = p.Title, AuthorUsername = u.Username })
                              .Skip((pageNumber - 1) * PostsPerPage)
                              .Take(PostsPerPage)
                              .ToList()
-                             .Select(x => new Post() { AuthorId = x.AuthorId, Id = x.Id, Content = x.Content, PublishDate = x.PublishDate, Title = x.Title });
+                             .Select(x => new Post() { AuthorId = x.AuthorId, Id = x.Id, Content = x.Content, PublishDate = x.PublishDate, Title = x.Title, AuthorUsername = x.AuthorUsername });
                 foreach (var post in posts)
                     yield return post;
             }
@@ -203,11 +205,12 @@ namespace CodingIdeas.Core
             {
                 var posters = ctx.Posts
                                  .Include(x => x.RatableEntity)
+                                 .Include(x => x.RatableEntity.User)
                                  .GroupBy(x => x.RatableEntity.UserId)
                                  .Where(x => x.Key != null)
                                  .OrderByDescending(x => x.Count())
                                  .Take(howMany)
-                                 .Select(x => new { UserId = x.Key.Value, NumberOfPosts =  x.Count() });
+                                 .Select(x => new { UserId = x.Key.Value, NumberOfPosts =  x.Count(), Username=x.FirstOrDefault().RatableEntity.User.Username });
                 foreach (var p in posters)
                     yield return p;
             }

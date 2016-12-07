@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using System;
+using System.Data.Entity;
 using CodingIdeas.Core.Exceptions;
 
 namespace CodingIdeas.Core
@@ -68,7 +69,7 @@ namespace CodingIdeas.Core
             {
                 if (ctx.Users.Where(x => x.Username == @new.Username && x.Password == @new.Password).Count() != 0)
                     throw new InvalidCredentialsException();
-                var r = ctx.Users.Where(x => x.Id == oldUserId).FirstOrDefault();
+                var r = ctx.Users.Include(x => x.UserSkills).Where(x => x.Id == oldUserId).FirstOrDefault();
                 if (r == null)
                     throw new UserNotFoundException();
                 if(propertiesToChange.HasFlag(UserProperties.DateOfBirth))
@@ -83,6 +84,12 @@ namespace CodingIdeas.Core
                     r.Password = @new.Password;
                 if (propertiesToChange.HasFlag(UserProperties.Username))
                     r.Username = @new.Username;
+                if(propertiesToChange.HasFlag(UserProperties.Skills))
+                {
+                    r.UserSkills.Clear();
+                    foreach (var s in @new.Skills)
+                        r.UserSkills.Add(new DB.UserSkill() { ProgrammingLanguageId = s.ProgrammingLanguage.Id, Proficiency = s.Proficiency, UserId = r.Id });
+                }
                 ctx.SaveChanges();
             }
         }

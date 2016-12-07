@@ -21,14 +21,16 @@ namespace CodingIdeas.Core
         public DateTime PublishDate { get; set; }
         public Guid PostId { get; set; }
         public string Content { get; set; }
+        public string AuthorUsername { get; set; }
 
-        public Comment(Guid? authorId, Guid postId, DateTime publishDate, string content)
+        public Comment(Guid? authorId, Guid postId, DateTime publishDate, string content, string authorUsername)
         {
             Id = Guid.NewGuid();
             AuthorId = authorId;
             PublishDate = publishDate;
             PostId = postId;
             Content = content;
+            AuthorUsername = authorUsername;
         }
     }
 }

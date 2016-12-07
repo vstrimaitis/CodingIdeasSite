@@ -68,6 +68,8 @@ namespace CodingIdeas.WebApi.Controllers
                 props |= UserProperties.LastName;
             if (value[nameof(Core.User.Username)] != null)
                 props |= UserProperties.Username;
+            if (value[nameof(Core.User.Skills)] != null)
+                props |= UserProperties.Skills;
             if (value[nameof(Core.User.Password)] != null)
             {
                 props |= UserProperties.Password;

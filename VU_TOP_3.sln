@@ -9,6 +9,45 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodingIdeas.TestApp", "Codi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodingIdeas.WebApi", "CodingIdeas.WebApi\CodingIdeas.WebApi.csproj", "{D35C0F3E-2CD1-42AB-9B61-0EBBE7F03ED9}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WebUI", "WebUI", "{B047B999-2350-4DFD-8BF0-CC6A339816FB}"
+	ProjectSection(SolutionItems) = preProject
+		..\..\..\..\..\..\..\inetpub\wwwroot\CodingIdeas\site\editProfile.html = ..\..\..\..\..\..\..\inetpub\wwwroot\CodingIdeas\site\editProfile.html
+		..\..\..\..\..\..\..\inetpub\wwwroot\CodingIdeas\site\index.html = ..\..\..\..\..\..\..\inetpub\wwwroot\CodingIdeas\site\index.html
+		..\..\..\..\..\..\..\inetpub\wwwroot\CodingIdeas\site\newPost.html = ..\..\..\..\..\..\..\inetpub\wwwroot\CodingIdeas\site\newPost.html
+		..\..\..\..\..\..\..\inetpub\wwwroot\CodingIdeas\site\post.html = ..\..\..\..\..\..\..\inetpub\wwwroot\CodingIdeas\site\post.html
+		..\..\..\..\..\..\..\inetpub\wwwroot\CodingIdeas\site\user.html = ..\..\..\..\..\..\..\inetpub\wwwroot\CodingIdeas\site\user.html
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "css", "css", "{C78E6AB2-9C86-46FF-A161-B9789A64B743}"
+	ProjectSection(SolutionItems) = preProject
+		..\..\..\..\..\..\..\inetpub\wwwroot\CodingIdeas\site\css\bootstrap.css = ..\..\..\..\..\..\..\inetpub\wwwroot\CodingIdeas\site\css\bootstrap.css
+		..\..\..\..\..\..\..\inetpub\wwwroot\CodingIdeas\site\css\bootstrap.min.css = ..\..\..\..\..\..\..\inetpub\wwwroot\CodingIdeas\site\css\bootstrap.min.css
+		..\..\..\..\..\..\..\inetpub\wwwroot\CodingIdeas\site\css\index.css = ..\..\..\..\..\..\..\inetpub\wwwroot\CodingIdeas\site\css\index.css
+		..\..\..\..\..\..\..\inetpub\wwwroot\CodingIdeas\site\css\post.css = ..\..\..\..\..\..\..\inetpub\wwwroot\CodingIdeas\site\css\post.css
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "fonts", "fonts", "{F44B474A-DFFB-4337-9556-8680B561823E}"
+	ProjectSection(SolutionItems) = preProject
+		..\..\..\..\..\..\..\inetpub\wwwroot\CodingIdeas\site\fonts\glyphicons-halflings-regular.eot = ..\..\..\..\..\..\..\inetpub\wwwroot\CodingIdeas\site\fonts\glyphicons-halflings-regular.eot
+		..\..\..\..\..\..\..\inetpub\wwwroot\CodingIdeas\site\fonts\glyphicons-halflings-regular.svg = ..\..\..\..\..\..\..\inetpub\wwwroot\CodingIdeas\site\fonts\glyphicons-halflings-regular.svg
+		..\..\..\..\..\..\..\inetpub\wwwroot\CodingIdeas\site\fonts\glyphicons-halflings-regular.ttf = ..\..\..\..\..\..\..\inetpub\wwwroot\CodingIdeas\site\fonts\glyphicons-halflings-regular.ttf
+		..\..\..\..\..\..\..\inetpub\wwwroot\CodingIdeas\site\fonts\glyphicons-halflings-regular.woff = ..\..\..\..\..\..\..\inetpub\wwwroot\CodingIdeas\site\fonts\glyphicons-halflings-regular.woff
+		..\..\..\..\..\..\..\inetpub\wwwroot\CodingIdeas\site\fonts\glyphicons-halflings-regular.woff2 = ..\..\..\..\..\..\..\inetpub\wwwroot\CodingIdeas\site\fonts\glyphicons-halflings-regular.woff2
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "js", "js", "{F3BFEF28-2013-4A95-B9DE-C437B5271A6A}"
+	ProjectSection(SolutionItems) = preProject
+		..\..\..\..\..\..\..\inetpub\wwwroot\CodingIdeas\site\js\api.js = ..\..\..\..\..\..\..\inetpub\wwwroot\CodingIdeas\site\js\api.js
+		..\..\..\..\..\..\..\inetpub\wwwroot\CodingIdeas\site\js\bootstrap.js = ..\..\..\..\..\..\..\inetpub\wwwroot\CodingIdeas\site\js\bootstrap.js
+		..\..\..\..\..\..\..\inetpub\wwwroot\CodingIdeas\site\js\bootstrap.min.js = ..\..\..\..\..\..\..\inetpub\wwwroot\CodingIdeas\site\js\bootstrap.min.js
+		..\..\..\..\..\..\..\inetpub\wwwroot\CodingIdeas\site\js\editProfile.js = ..\..\..\..\..\..\..\inetpub\wwwroot\CodingIdeas\site\js\editProfile.js
+		..\..\..\..\..\..\..\inetpub\wwwroot\CodingIdeas\site\js\index.js = ..\..\..\..\..\..\..\inetpub\wwwroot\CodingIdeas\site\js\index.js
+		..\..\..\..\..\..\..\inetpub\wwwroot\CodingIdeas\site\js\jquery.js = ..\..\..\..\..\..\..\inetpub\wwwroot\CodingIdeas\site\js\jquery.js
+		..\..\..\..\..\..\..\inetpub\wwwroot\CodingIdeas\site\js\newPost.js = ..\..\..\..\..\..\..\inetpub\wwwroot\CodingIdeas\site\js\newPost.js
+		..\..\..\..\..\..\..\inetpub\wwwroot\CodingIdeas\site\js\post.js = ..\..\..\..\..\..\..\inetpub\wwwroot\CodingIdeas\site\js\post.js
+		..\..\..\..\..\..\..\inetpub\wwwroot\CodingIdeas\site\js\user.js = ..\..\..\..\..\..\..\inetpub\wwwroot\CodingIdeas\site\js\user.js
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,5 +69,10 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{C78E6AB2-9C86-46FF-A161-B9789A64B743} = {B047B999-2350-4DFD-8BF0-CC6A339816FB}
+		{F44B474A-DFFB-4337-9556-8680B561823E} = {B047B999-2350-4DFD-8BF0-CC6A339816FB}
+		{F3BFEF28-2013-4A95-B9DE-C437B5271A6A} = {B047B999-2350-4DFD-8BF0-CC6A339816FB}
 	EndGlobalSection
 EndGlobal

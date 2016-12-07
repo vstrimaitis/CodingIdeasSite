@@ -14,7 +14,8 @@ namespace CodingIdeas.Core
         LastName = 16,
         DateOfBirth = 32,
         Password = 64,
-        All = 127
+        Skills = 128,
+        All = 255
     }
 
     public struct User
